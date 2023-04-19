@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=0"/> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Document</title>
+  <link rel="stylesheet" type="text/css" href="https://yataecuat.blob.core.windows.net/websources/general.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+
+</head>
+
+<style>
+  input[type='text'],
+  input[type='number'],
+  input[type='tel'],
+  input[type='password'],
+  textarea {
+    font-size: 18px;
+  }
+
+  .mainContainer {
+    height: 320px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .inputRow {
+    display: flex;
+    justify-content: center;
+    /* padding: 3% 7%; */
+    width: 92vw;
+    max-width: 380px;
+    min-width: 230px;
+    box-sizing: border-box;
+  }
+
+  #countryCode {
+    height: 30px;
+    margin: 8px 10px 8px 0;
+    border: 0;
+    box-sizing: border-box;
+    background-color: transparent;
+    border-bottom: 1px solid black;
+  }
+
+  #passwordRow {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  @media screen and (max-width: 540px) {
+    #passwordRow input::placeholder {
+      font-size: 16px;
+    }
+  }
+
+  #formSumbit {
+    /* width: 90%; */
+    width: 330px;
+    height: 50px;
+    background-color: #82A90E;
+    border: 0px;
+    color: #FFF;
+    border-radius: 8px;
+    padding: 3px;
+    margin: 16px 0 8px;
+    font-size: 18px;
+    z-index: 100;
+    cursor: pointer;
+  }
+
+  #signInName {
+    background-color: rgba(0, 0, 0, .1);
+  }
+
+  #forgotPass:hover {
+    color: #A5CD39
+  }
+
+  #forgotPass {
+    margin-top: 4px;
+    color: #82A90E;
+    cursor: pointer;
+  }
+
+  .create,
+  #forgotPassword,
+  #ForgotPasswordExchange,
+  .password-label,
+  /* .rememberMe, */
+  #next {
+    display: none;
+  }
+
+  .itemLevel>p {
+    display: none;
+  }
+
+  #phoneVerificationControl_success_message {
+    color: #A5CD39;
+  }
+
+  #visiblePWBox {
+    margin-right: 25px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border:3px double #A5CD39; */
+    /* border-radius: 25px; */
+    margin: 0 10px;
+    font-size: 20px;
+    color: #A5CD39;
+    position: absolute;
+    right: 20px;
+    top: 4px;
+    cursor: pointer;
+    /* bottom:27px; */
+  }
+
+  #editnameBox {
+    margin: 0px;
+    /* width:40px; */
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border:3px double #A5CD39; */
+    /* border-radius: 25px; */
+    margin: 0 6px;
+    font-size: 16px;
+    color: #A5CD39;
+    position: absolute;
+    right: 20px;
+    top: -52px;
+    cursor: pointer;
+  }
+
+  #loginContainer {
+    display: none;
+  }
+
+  #errorNotice {
+    color: red;
+    text-align: center;
+    font-size: 12;
+    margin-bottom: 15px;
+  }
+
+  .pageLevel {
+    opacity: 0;
+    height: 0;
+  }
+
+  .localAccount {
+    width: 100%;
+    display: flex;
+  }
+
+  #rememberMeRow {
+    width: 90%;
+    display: flex;
+    align-items: center;
+  }
+
+  #rememberMeRow label {
+    display: block;
+  }
+
+  input[type='checkbox'] {
+    position: relative;
+    cursor: pointer;
+    height: 20px;
+    width: 20px;
+    /* border: 0rem solid; */
+    /* border-bottom: 1px solid #6a3b0d; */
+    /* padding: 5px 0; */
+    margin: 8px 0;
+  }
+
+  input[type='checkbox']:before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 0;
+    left: 0;
+    border: 1.5px solid #6A3B0D;
+    border-radius: 4px;
+    background-color: white;
+  }
+
+  input[type='checkbox']:checked:after {
+    content: "";
+    display: block;
+    width: 6px;
+    height: 12px;
+    border: solid #82A90E;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    position: absolute;
+    top: 2px;
+    left: 7px;
+  }
+</style>
+
+<body>
+  <div class="mainContainer" id="loginContainer">
+    <div class="container unified_container ">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <div id="usernameNotice">
+              </div>
+            </div>
+
+            <div id="phoneInputError"></div>
+
+            <div class="panel-body">
+              <div id="api">
+
+              </div>
+            </div>
+
+            <div class="panel-body" style="padding-top: 0">
+              <div class="inputRow" style="position: relative">
+                <div id="passwordRow">
+                  <input type="password" placeholder="密碼" id="passwordNew">
+                </div>
+
+                <div id="visiblePWBox">
+                  <img id="visiblePW1" src="https://yataecuat.blob.core.windows.net/websources/materials/eye_open.png"
+                    style="width: 30px; height: 20px; display: none;" />
+                  <img id="visiblePW2" src="https://yataecuat.blob.core.windows.net/websources/materials/eye_close.png"
+                    style="width: 30px; height: 20px;" />
+                </div>
+
+                <div id="editnameBox">
+                  <div id="editname">更改</div>
+                </div>
+              </div>
+
+              <div class="inputRow">
+                <div id="rememberMeRow">
+                  <input id="rememberMeBox" type="checkbox" name="rememberMe" tabindex="1" />
+                  <label for="rememberMeBox"
+                    style="width: 70%; height: 20px; color:#6A3B0D; display: block; margin-left: 12px; font-size: 16px;">保持登入</label>
+                </div>
+              </div>
+
+              <div class="inputRow" style="position: relative">
+                <div id="errorNotice">
+                </div>
+              </div>
+
+              <div class="inputRow">
+                <Button id='formSumbit' type="submit">登入</Button>
+              </div>
+
+              <div class="inputRow">
+                <div id="forgotPass"> </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div>Foot</div> -->
+  </div>
+
+  <script src="https://yataecuat.blob.core.windows.net/websources/login01.js" type="text/javascript"> </script>
+</body>
+<style>
+  #simplemodal-overlay {
+    background: transparent
+  }
+</style>
+<script>
+  $('body').on('DOMNodeInserted', function (e) {
+    if ($(e.target).attr('id') == 'verifying_blurb') {
+
+      $(e.target).html("")
+    }
+  });
+
+</script>
+
+</html>

@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Yata eShop Signup</title>
+
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+  <link rel="stylesheet" type="text/css" href="https://yataecuat.blob.core.windows.net/websources/general.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+</head>
+
+<style>
+  input[type='text'],
+  input[type='number'],
+  input[type='tel'],
+  input[type='password'],
+  input[type='email'],
+  textarea {
+    font-size: 16px;
+    font-family: 'Source Sans Pro', sans-serif;
+    border-radius: 0px;
+    color: #6a3b0d;
+    /* border-bottom: 1px solid gray; */
+  }
+
+  input {
+    margin: 8px 0 0;
+  }
+
+  ::placeholder {
+    color: #B7B7B7
+  }
+
+  input:focus-visible,
+  input:focus {
+    outline: 0px;
+    color: #82A90E;
+    border: 0px;
+    border-bottom: 2px solid #82A90E;
+  }
+
+  input:focus::placeholder {
+    color: #82A90E;
+  }
+
+  .styled-select select {
+    -moz-appearance: none;
+    /* Firefox */
+    -webkit-appearance: none;
+    /* Safari and Chrome */
+    appearance: none;
+  }
+
+  a.helpLink.tiny {
+    display: none;
+  }
+
+  .errorMsg {
+    color: red;
+    width: 90%;
+    text-align: left;
+    font-size: 12px;
+  }
+
+  #api {
+    display: none;
+  }
+
+  #signupFrom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 25px 0 10px;
+  }
+
+  .inputRowPw {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    min-width: 260px;
+    min-height: 40px;
+    justify-content: center;
+    align-items: center;
+    margin: 6px 0;
+  }
+
+  .inputRow {
+    display: none;
+    flex-direction: column;
+    width: 90%;
+    min-width: 260px;
+    min-height: 0px;
+    justify-content: center;
+    align-items: center;
+    margin: 6px 0;
+  }
+
+  .twoItem {
+    display: flex;
+    width: 90%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .firstItem {
+    margin-right: 7%;
+  }
+
+  .helpNotice {
+    text-align: left;
+    color: #B7B7B7;
+    width: 90%;
+    font-size: 12px;
+  }
+
+  div {
+    /* color:; */
+    margin-block-start: 0.1em;
+    margin-block-end: 0.5em;
+  }
+
+  footer {
+    height: 20vh;
+  }
+
+  #ntcgoBack {
+    width: 40px;
+    height: 45px;
+    margin: 8px 0;
+    font-size: 24px;
+  }
+
+  #signupFromBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 0;
+  }
+
+  #hpyataCondition {
+    margin: 10px 0;
+  }
+
+  .inputRowPw {
+    position: relative
+  }
+
+  #visiblePWBox,
+  #visibleRPWBox {
+    margin-right: 25px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border:3px double #A5CD39; */
+    /* border-radius: 25px; */
+    margin: 0 10px;
+    font-size: 20px;
+    /* color: #82A90E; */
+    position: absolute;
+    right: 5%;
+    top: 5%;
+    /* bottom:27px; */
+
+  }
+
+  .tncContainer {
+    position: absolute;
+    border: #6a3b0d solid 2px;
+    padding: 2rem 1.5rem;
+    height: 110%;
+    overflow: scroll;
+    top: 0;
+    background-color: white;
+    z-index: 100;
+    box-sizing: content-box;
+  }
+
+  .header1 {
+    font-size: 20px;
+    font-weight: 800;
+    color: #6a3b0d;
+    letter-spacing: -0.1px;
+    /* margin-left: 12px; */
+    margin-top: 10px;
+    text-decoration: underline;
+    text-align: center
+  }
+
+  .yataTitle {
+    font-size: 14px;
+    font-weight: 700;
+    color: #6a3b0d;
+    letter-spacing: -0.1px;
+    margin-left: 12px;
+    margin-top: 10px;
+
+  }
+
+  .content1 {
+    font-size: 12px;
+    font-weight: 700;
+    color: #6a3b0d;
+    letter-spacing: -0.1px;
+    margin-left: 12px;
+    margin-top: 10px;
+    white-space: pre-wrap;
+
+  }
+
+  .tncCan {
+    position: fixed;
+    top: 14px;
+    right: 14px;
+    font-size: 20px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    cursor: pointer;
+  }
+
+  button {
+    width: 330px;
+    height: 50px;
+    background-color: #82A90E;
+    border: 0px;
+    color: #FFF;
+    border-radius: 8px;
+    padding: 3px;
+    margin: 8px 0;
+    font-size: 18px;
+    z-index: 100;
+    cursor: pointer;
+  }
+</style>
+
+
+<body>
+  <div class="mainContainer">
+    <div class="tncContainer" id="tnctc" style="display: none;">
+      <div style="position: relative;">
+        <p class="header1">
+          YATA-Fans」會員計劃 (“本會”) 條款及細則
+        </p>
+        <p class="yataTitle">
+          立即免費登記成為會員，盡享消費獎賞。
+        </p>
+        <p class="content1">
+
+          • 毋須消費，迎新即送迎新優惠 (請留意最新公佈)
+          • 每次購物，每港幣$1=1分
+          • 生日月份，無上限3X積分 (一田購物優惠日除外)
+          • 逢星期三，無上限3X積分
+          • 積分兌換高達1%回贈,
+          • 消費7天內，後補登記會員積分
+          • 選購嬰兒產品滿指定金額，升級為「BB會」，盡享全年折扣優惠
+
+        </p>
+        <p class="yataTitle">
+          賺取積分
+        </p>
+        <span class="content1">
+          1.
+          會員每次購物，每港幣1元之折實消費金額可獲1分積分*。於一田百貨或一田超市購物，只須於付款前出示「YATA-Fans」手機應用程式內之QR碼電子會員卡；於網上商店購物，須預先於「YATA-Fans」手機應用程式內連結一田eShop或eGift帳戶。積分不會計算毫仙，並於消費後24小時內於「YATA-Fans」手機應用程式內顯示。例如您的折實購買金額為133.9元，您將獲得的為133分。
+          *購買以下產品將不獲積分獎賞：嬰兒奶粉(1號及2號)、塑膠購物袋環保徵費、拆舊機/ 舊機回收棄置徵費、送貨費用、搬運樓梯費用、安裝費用、因更換/ 逾期取貨/
+          未能成功派送貨品而收取之網購額外行政費用、修改服裝費用、訂金、自動售賣機/扭蛋機貨品、捐款及指定商戶之產品。使用禮券或優惠券付款將不獲積分獎賞。
+
+          2.
+          積分計算周期由每年10月1日至翌年9月30日止(兩日均計算在內)，期間所累積的積分於積分計算周期後之12月31日到期。例如，於9月30日或之前儲得的積分，同年的12月31日到期；於10月1日儲得的積分，將於下年的12月31日才到期。
+
+          3. 簽賬金額只計算實際支付之金額（即只計算折扣後、扣減信用卡簽賬回贈、使用現金券或任何優惠券之剩餘金額）。
+
+          4.
+          會員於生日月份消費（必須於購物前，於「YATA-Fans」手機應用程式內提供出生年月資料），可獲3倍積分（以折實消費金額計算，3倍積分已包括合資格交易原有港幣$1=1積分以及本優惠的額外2倍積分）。此優惠不能與逢星期三積分優惠及於一田購物優惠日同時使用。
+
+          5. 會員於逢星期三消費，可獲3倍積分（以折實消費金額計算，3倍積分已包括合資格交易原有HK$1=1積分以及本優惠的額外2倍積分）。此優惠不能與生日月份優惠同時使用。
+
+          6. 如您於某次購物或使用服務時獲得退款，您在該次購物所獲得之積分將會在退款時於您的「YATA-Fans」帳戶中同時扣除及作出調整。 若積分結餘少於所需扣除的積分，會員須購物以賺取不足夠的積分，否則該退款要求將不作受理。
+
+          7. 若本會誤發任何積分予會員，本會有權取消或扣減該等積分而毋須另行通知。
+
+          8.
+          會員可透過「YATA-Fans」手機應用程式內翻查最新積分餘額，唯所有積分紀錄以本會資料庫為準，並不接受會員索回任何積分。如因技術問題出錯而阻礙本會從電腦系統取回有關會員的積分結餘的資料，造成任何積分損失，本會概不負上任何責任。
+
+          9. 任何包括但不限於因網絡問題，系統固障，電話接收問題或第三方應該程式攔截等而引至會員所提交的資料有遲延、遺失、錯誤或無法辨識等情況，本會概不負上任何責任。
+
+          10.
+          若會員以不誠實或不合法方法賺取積分，違反有關條款及細則，包括拿取他人的消費儲分及／或換領電子優惠券，或商舖職員拿取其他顧客之消費當作本人的消費而登記積分及／或換領電子優惠券，或當本會有理由相信該會員以不誠實或不合法方法賺取積分，違反有關條款及細則，本會有權暫停或終止該會員的資格，立即取消積分並要求賠償因該會員以不誠實或不合法方法賺取積分或其他違規行為而可能對本會或參與商戶所造成的任何損失。
+
+          11.
+          若消費時尚未成為「YATA-Fans」會員，顧客可於付款前，向收銀員提供手機號碼，並於消費後之7天內(包括消費當日)，下載「YATA-Fans」手機應用程式並用已提供予一田收銀員之手機號碼登記成為會員，即可獲取由登記日起計7天內
+          (包括登記當日)之所有購物積分。此後補登記積分只適用於付款時仍未成為會員之顧客，如會員於付款時，未有出示「YATA-Fans」手機應用程式內之QR碼電子會員卡，並向收銀員提供手機號碼，其消費均不可獲購物儲分優惠。
+
+          12. 若會員對積分獎賞有任何爭議，本會、參與商戶及供應商保留最終決定權。
+        </span>
+        <p class="yataTitle">
+          轉讓積分至第三者
+        </p>
+        <p class="content1">
+          1. 在您授權下您可要求我們將您的積分轉移至另一會員的「YATA-Fans」帳戶。您的指示一經確認後將不可逆轉。
+          唯當本會有理由相信閣下以不誠實或不合法方法賺取積分或將您的積分轉移，本會有權扣除或取消閣下及另一會員的積分而無須另行通知。
+          2. 每次可轉出之積分必須為3,000分，其後以1,000分之倍數遞增。
+        </p>
+        <p class="yataTitle">
+          兌換及使用電子優惠券
+        </p>
+        <p class="content1">
+          1.
+          會員可於「YATA-Fans」手機應用程式內瀏覽積分兌換詳情，當會員累積足夠積分，會員可於「YATA-Fans」手機應用程式內兌換電子優惠券。一經確認，系統會即時從會員帳戶扣取相關積分，同時電子優惠券即時於「YATA-Fans」手機應用程式內顯示。有關申請不可更改或取消。
+
+          2. 電子優惠券包括港幣$15現金券
+          (每3,000積分可兌換一張港幣$15電子現金券)、港幣$50現金(每5,000積分可兌換一張港幣$50電子現金券)，或其他由參與商戶及供應商提供之產品及服務。積分不能直接當作現金付款。
+
+          3. 會員須於指定時限內到指定地點或商戶換領使用已兌換的電子優惠券，否則當自動放棄論，亦不會獲補發獎賞或積分。
+
+          4. 電子優惠券適用於YATA eShop/ eGift網上商店。會員必須於付款前輸入有關電子優惠券的編號 (此功能暫時不適用)。
+          5. 會員可到指定地點或商戶出示「YATA-Fans」手機應用程式內的電子會員卡以換領會員獨家禮遇。
+
+          6. 會員須明白及接受所有產品或服務數量有限，先到先得，送/換完即止。如因活動／電子優惠券名額有限或其他原因導致會員未能於限期前使用電子優惠券，會員須明白及接受任何未能成功使用電子優惠券之積分並不會獲得任何補償。
+
+          7. 本會保留權利，可隨時修改換領電子優惠券時所需的積分。
+
+          8.
+          電子優惠券圖只供參考，一切以實物為準。所有換出之電子優惠券及由參與商戶及供應商提供之產品及服務不包括貨品保養、退換、轉讓、兌換現金或作現金找贖。會員須即時檢驗所換領之禮品，否則事後任何情況下均不會獲補發獎賞或積分。本會不會對供應商提供之食物、貨品、服務事宜及產品質素作出保證或於使用該產品所構成之後果承擔任何相關責任。
+
+          9. 所有由參與商戶及供應商提供之產品及服務參與商戶或供應商提供的獎賞或禮遇受相關條款及細則約束，會員須向參與商戶或供應商查詢有關獎賞或禮遇的有效日期及詳細條款及細則。
+
+          10. 參與商戶或供應商有權更改獎賞或禮遇的換領條款及細則而不作另行通知。如會員與參與商戶或供應商出現任何爭議而蒙受損失，本會概不負責。
+
+          11.
+          所有產品及服務只能在有存貨之情況下提供。本會可全權酌情決定隨時終止提供某產品及服務或提供具有同等價值之類似獎賞作為代替，而毋須於換領電子優惠券前另行通知。新城市廣場並不保證任何產品及服務於整個推廣活動有效期內一直保持供應。
+
+          12. 若會員對換領及使用電子優惠券、積分賺取或轉讓有任何爭議，本會、參與商戶及供應商保留最終決定權。
+        </p>
+
+        <p class="yataTitle">
+          升級至BB 會
+        </p>
+        <p class="content1">
+          1. 會員於30天內於一田百貨嬰兒用品部、一田超市購買產品 (1-2號嬰兒奶粉除外)
+          累積購物滿$3,000，並於其後30天內登入「YATA-Fans」應用程式提供子女資料，「YATA-Fans」會藉將即時升級至BB會，有效期為36個月。逾期需重新累積計算。
+
+          2. BB會折扣優惠請瀏覽:http://www.yata.hk/tch/member/baby.aspx
+        </p>
+
+        <p class="yataTitle">
+          有關「YATA-Fans」會員計劃會籍 (“本會”)
+        </p>
+        <p class="content1">
+          1. 顧客必須先下載「YATA-Fans」手機應用程式，輸入所需資料及驗証碼後，即可成為本會會員。
+
+          2. 會員必須提供正確及有效的姓名、手機號碼及電郵地址，否則將無法接收驗証碼或會員資訊。本會概不承擔任何未能成功傳送的手機短訊、推送通知及電郵之責任。
+
+          3. 會員須確保在申請表上所提供的資料真實、正確及完整，並且不涉及任何不誠實或不合法的原素。
+
+          4. 本會有權決定會員的會籍是否有效。
+
+          5. 每人只可使用登記一個會員帳戶一次，而每一位手機號碼只限被推薦一次，所有重複或不誠實或不合法申請均不會被接納。如發現重複登記，本會有權隨時凍結或終止該等人士的會籍而毋須另行通知。
+
+          6. 會籍只限會員本人使用，不得轉讓他人。
+
+          7.
+          會員更新個人資料後，須核對其積分及所有資料並確認無誤。如會員更改了手機號碼，須致電通知我們要求更新資料，以避免他人獲得此手機號碼後，導致個人資料外洩，盜用積分/電子優惠券等損失。所有會員資料、積分及換領紀錄，均以本會所存之紀錄為準。
+
+          8. 會員須對其會員號碼及密碼予以妥善保密。若有任何人（包括任何第三方，無論是否獲得會員授權）使用其會員帳戶，該會員須負上全部責任。
+
+          9. 任何因網絡問題、系統固障、電話接收問題或被第三方應用程式攔截而引致會員所遞交的資料有遲延、遺失、錯誤或無法辨識等情況，本會概不承擔任何責��。
+
+          10. 任何會員如被發現盜用他人帳戶、以不誠實方法登記會籍或推薦好友入會或使用會員福利，本會有權隨時凍結或終止該等人士的會籍而毋須另行通知。
+
+          11. 會員可透過以下方法聯絡本會修改會員資料或凍結會籍：電郵至yatafans@yata.hk (電郵內容需包括「YATA-Fans」帳戶上顯示的姓名、手機號碼、電郵地址、日間聯絡電話號碼及需修改的會員資料）。
+        </p>
+        <p class="yataTitle">
+          一般條款及細則
+        </p>
+        <p class="content1">
+          1. 「YATA-Fans」會員計劃 (“本會”) 由一田有限公司管理及營運。
+
+          2. 本會有權決定是否接納所有會籍的申請。
+
+          3. 會員啟動會籍後，即代表會員接受所有本會會員計劃條款及細則。
+
+          4. 只有於App Store或Google Play下載「YATA-Fans」手機應用程式，並完成會員登記程序的顧客，方可成為本會會員及享用會員禮遇。
+
+          5.
+          一田有限公司有權隨時改動「YATA-Fans」架構及內容，包括兌換及換算積分方法、積分有效期、可供兌換的電子優惠券、換領獎賞或禮遇方法、條款及細則、其他項目及本會而毋須預先通知會員。會員須留意本會所有架構及內容，包括本條款及細則的改動。凡會員賺取積分、換領或使用電子優惠券，即代表會員接受所有相關的條款及細則。任何因本會架構及內容，包括本條款及細則改動或更新而導致的損失，本會概不負責。
+
+          6. 如有任何疑問，可透過以下方法聯絡本會查詢：電郵至yatafans@yata.hk (電郵內容需包括「YATA-Fans」帳戶上顯示的姓名、手機號碼、電郵地址及日間聯絡電話號碼）
+
+          7. 本條款及細則的中文及英文版本若有任何差異，一概以英文本為準。
+        </p>
+        <p class="header1">
+          個人資料(私隱)政策
+        </p>
+        <p class="yataTitle">
+          私隱政策聲明
+        </p>
+        <p class="content1">
+          以下是YATA-Fans會員獎賞計劃(“本會”)根據《個人資料(私隱)條例》(第486章)之規定所訂之私隱政策聲明。我們將確保我們之職員將執行有關政策，嚴格保密你的個人資料。
+
+          我們保障本會會員及本手機應用程式、官方微信號、網站用戶(以下統稱「用戶」)所提供之一切資料。除於提供會籍申請、會籍續期、會籍/戶口維護、登記電郵地址時，我們可能需要收集其個人資料及記錄用戶電腦的網路位址外，我們不會於用戶瀏覽網站時收集任何足以識別個人身份之資料及任何個人資料。而此等資料將用於編備有關我們網站使用情況之一般統計資料。
+        </p>
+        <p class="yataTitle">
+          使用Cookies檔案
+        </p>
+        <p class="content1">
+          我們在網站上使用cookies以提高網站的性能和增強用戶的在線體驗。 我們使用Session
+          cookies令用戶可瀏覽及使用網站上的基本功能，例如保留登入資料並減少在互聯網上資料傳遞的需要。我們在使用cookies時，將不會向用戶收集任何個人資料。
+          任何個人資料的收集將按我們的《個人資料收集聲明》的條款所進行。個人資料將會安全穩妥儲存於我們的系統內，而我們將採取所有切實可行的步驟，以確保個人資料的保存時間不超過將其保存以貫徹該資料被使用於或會被使用於的目的(包括任何直接有關的目的)所需的時間。只有經培訓及獲授權的職員才可獲准查閱該等個人資料，除《個人���料收集聲明》所載之人士除外，我們不會向任何我們以外的人士發佈該等個人資料，用戶有權根據載於《個人資料收集聲明》的程序，要求存取及更正其個人資料。
+
+          我們可不時根據用戶之個人資料向他們寄出宣傳產品及服務之直接市場推廣訊息。在直接市場推廣過程中，我們將提供適當之「拒絕服務選擇」。
+
+          我們將竭盡所能，確保用戶之私隱獲得妥善保障。然而，鑑於互聯網之性質，我們不能擔保可以做到「完全保障」。
+
+          我們會起用第三者內容供應商及服務供應商，並提供接駁其他網站之連結。此等第三者可於用戶使用其服務時收集有關用戶之個人資料。此等第三者將依其私隱政策行事，而我們的《私隱政策聲明》及《個人資料收集聲明》並不涵蓋該等第三者。
+
+          用戶如對我們之私隱政策及慣例有任何疑問，請電郵yatafans@yata.hk收，或投寄至香港沙田鄉事會路138號新城市中央廣場1座901室資料保障主任收。
+
+          此乃中文譯本，如有任何爭議，一切以英文為準。
+        </p>
+        <p class="yataTitle">
+          個人資料收集聲明
+        </p>
+        <p class="content1">
+          本聲明乃遵照《個人資料(私穩)條例》(第486章)的要求而發出，通知閣下作為用戶收集資料的目的、閣下同意我們如何使用這些資料及閣下的權利。本聲明會不時更改，故請定期查閱。閣下登記使用我們之服務及每次登入我們手機應用程式，即表示同意接受當時生效之個人資料收集聲明。
+        </p>
+        <p class="yataTitle">
+          資料之收集
+        </p>
+        <p class="content1">
+          在使用我們手機應用程式之時，用戶可能會被要求向我們提供個人識別資料，例如姓名及電郵地址。為向用戶提供本手機應用程式之各項服務及活動，該些資料是必要的。倘若閣下作為用戶未能提供所需資料，我們將不能向閣下提供我們手機應用程式上可供享用之服務及活動。我們可能記錄訪問本網站所使用的電腦的網路地址。
+        </p>
+        <p class="yataTitle">
+          資料之目的及用途
+        </p>
+        <p class="content1">
+          我們所收集之資料將用作以下用途：
+          • 監控本手機應用程式之運作及協助本手機應用程式之未來發展；
+          • 匯編有關我們之用戶之整體統計資料以作關於手機應用程式使用的分析；
+          • 為有意註冊本手機應用程式上所提供的服務的用戶設立戶口及維護其戶口；
+          • 為有意申請入會的用戶註冊會籍及維護其會籍；
+          • 識別和核實使用本手機應用程式及/或本會所提供服務的���戶的身份及/或資格；
+          • 就有關或因使用本手機應用程式上及/或本會所提供的服務發生的事項與用戶溝通；
+          • 為本會及 / 或一田有限公司及其附屬公司進行研究及 / 或分析；
+          • 不時向用戶提供關於集團的資訊，包括集團或供應商為用戶提供的產品、設施、服務及其他優惠、獎賞及其他得益的資訊並且為用戶匯集及安排該等產品、設施、服務及其他優惠、獎賞或其他得益（參閱使用資料作直接促銷）；
+          • 為本會及 / 或一田有限公司及其附屬公司所提供的設施、服務及 / 或產品，及作出評估及改進；
+          • 促進用戶與本會間的溝通，並鼓勵用戶就其對本會及 / 或集團之設施、服務及 / 或產品之需要及期望作出回應；
+          • 為確定用戶享用本會及一田有限公司及其附屬公司產品、設施、其他優惠、獎賞或其他得益的資格，並考慮用戶的需要，而將用戶個人資料與用戶先前提供給一田有限公司及其附屬公司的所有個人資料加以比較 。
+
+          使用資料作直接促銷: 我們有意使用所有閣下作為用戶所提供的資料，包括姓名、聯繫資料和所有其他可協助我們了解閣下可能感興趣的商品和服務的資料，提供上述資訊並進行直接促
+          銷，包括產品、服務、諮詢、意見和與以下各項有關的促銷標的，包括香港和世界各地的百貨及超市業務有關之產品及服務。如無閣下的同意，我們則可能不能如上使用或向該等機構提供上述資料。閣下可在向我們手機應用程式提供資料時表示同意，或以書面向我們的資料保障主任表示同意，不另收費。
+        </p>
+        <p class="yataTitle">
+          資料之轉移
+        </p>
+        <p class="content1">
+          用戶之個人資料將被保密；然而由於系統管理、運作及保養需要，我們會將有關資料轉移或披露於對本會有保密責任並提供與本會運作有關的行政、電訊、電腦、數據處理或其他服務的承辦商。
+        </p>
+        <p class="yataTitle">
+          使用Cookies檔案
+        </p>
+        <p class="content1">
+          我們在網站上使用cookies以提高和增強用戶的在線體驗。 我們使用Session
+          cookies令用戶可瀏覽及使用網站上的基本功能，如保留登入資料可減少在互聯網上資料傳遞的需要。我們在使用cookies時，將不會向閣下收集任何個人資料。
+        </p>
+        <p class="yataTitle">
+          資料之查閱
+        </p>
+        <p class="content1">
+          閣下有權根據《個人資料（私隱）條例》(第486章)的規定，要求查閱或更正閣下之個人資料。如有任何查閱或更正資料的要求，請電郵至yatafans@yata.hk
+          收，或投寄至香港沙田鄉事會路138號新城市中央廣場1座901室資料保障主任收。
+
+          此乃中文譯本，如有任何爭議，一切以英文為準。
+
+          本會感謝會員長期支持，我們不時與會員分享一田及本會的各種最新資訊。如閣下不願意收取本會的直接促銷材料及/或資訊，可以向我們發出書面通知，電郵至yatafans@yata.hk收。
+
+          即使閣下選擇日後不收取我們的直接促銷材料及/或資訊，我們亦會依舊尊重閣下之會籍，以便閣下能繼續享受更多的會員福利。你可以透過本會網頁或展示於一田有限公司下不同場地的通告得悉本會其後的優惠訊息。
+        </p>
+        <p class="header1">
+          免責聲明
+        </p>
+        <p class="content1">
+          本資料只供參考之用。本會並不保證或聲明本資料是否全面、準確，或為最新之數據，如因使用或依據本手機應用程式、官方微信號、網站或經本手機應用程式、官方微信號進入的任何第三方網站的內容而招致任何損失或損害，本會概不負上任何責任。
+        </p>
+
+        <div style="height: 40px;">
+
+        </div>
+        <div class="tncCan" id="tncCanceltc">
+          <img src="https://yataecuat.blob.core.windows.net/websources/materials/close.png"
+            style="width: 20px; height: 20px" />
+        </div>
+      </div>
+    </div>
+
+    <!------------------------------------------------------------------>
+
+    <div id="signupFromBox">
+      <!-- <form id="signupFrom"> -->
+      <div class="inputRow">
+        <div class="inputRow" style="align-items: flex-start;">
+          <select name="title" id="yatatitle" style="width: 80px">
+            <option id="v0" value="" disabled selected hidden>稱謂</option>
+            <option id="v1" value="1">先生</option>
+            <option id="v2" value="2">太太</option>
+            <option id="v3" value="3">小姐</option>
+            <option id="v4" value="4">女士</option>
+          </select>
+          <div class="errorMsg" id="ertitle"></div>
+        </div>
+      </div>
+
+      <div class="inputRow">
+        <div class="twoItem">
+          <input class="inputfield onSelected firstItem" type="text" maxlength="12" id="yatagivenName" placeholder="名字">
+          <input class="inputfield onSelected" type="text" maxlength="8" id="yatasurname" placeholder="姓氏">
+        </div>
+
+        <div class="twoItem" style="justify-content: flex-start">
+          <div class="errorMsg firstItem" id="ergivenName"></div>
+          <div class="errorMsg" id="ersurname"></div>
+        </div>
+      </div>
+
+      <div class="inputRow">
+        <div class="twoItem">
+          <select name="code" id="yataCountryCode" class="firstItem" style="width: 80px; margin-bottom: 0;" disabled>
+            <option value="" disabled selected hidden>+852</option>
+            <option value="852">+852</option>
+            <option value="853">+853</option>
+            <option value="86">+86</option>
+          </select>
+
+          <input class="inputfield onSelected" type="text" id="yataMobile" placeholder="手機號碼" disabled>
+        </div>
+      </div>
+
+      <div class="inputRow">
+        <input class="inputfield onSelected" type="text" id="yatabirthday" placeholder="出生年月">
+        <div class="helpNotice" id="helpNotice">
+          <div class="errorMsg" id="erbirthday"></div>
+          <div id="hnbir">於生日月份購物可享特別禮遇 </div>
+        </div>
+      </div>
+
+      <div class="inputRow">
+        <input class="inputfield onSelected" type="email" id="yataemail" placeholder="電郵地址">
+        <div class="errorMsg" id="eremail"></div>
+      </div>
+
+      <div class="inputRowPw">
+        <input class="inputfield onSelected" type="password" id="yatanewPassword" placeholder="自訂登入密碼">
+
+        <div class="errorMsg" id="ernewPassword"></div>
+
+        <div class="helpNotice">
+          <div id="hnpw">
+            6-12 字元，必須包括字母及數字 (空格除外)
+          </div>
+        </div>
+
+        <div id="visiblePWBox">
+          <img id="visiblePW1" src="https://yataecuat.blob.core.windows.net/websources/materials/eye_open.png"
+            style="width: 30px; height: 20px; display: none;" />
+          <img id="visiblePW2" src="https://yataecuat.blob.core.windows.net/websources/materials/eye_close.png"
+            style="width: 30px; height: 20px;" />
+        </div>
+      </div>
+
+      <div class="inputRowPw">
+        <input class="inputfield onSelected" type="password" id="yatareenterPassword" placeholder="重新輸入登入密碼">
+
+        <div class="errorMsg" id="erreenterPassword"></div>
+
+        <div class="helpNotice">
+          <div id="hnpwr">
+            6-12 字元，必須包括字母及數字 (空格除外)
+          </div>
+        </div>
+
+        <div id="visibleRPWBox">
+          <img id="visibleRPW1" src="https://yataecuat.blob.core.windows.net/websources/materials/eye_open.png"
+            style="width: 30px; height: 20px; display: none;" />
+          <img id="visibleRPW2" src="https://yataecuat.blob.core.windows.net/websources/materials/eye_close.png"
+            style="width: 30px; height: 20px;" />
+        </div>
+      </div>
+
+      <div class="inputRow">
+        <input class="inputfield onSelected" type="text" id="yataPromoCode" placeholder="優惠碼 (如有)">
+      </div>
+
+      <div class="inputRow">
+        <div class="helpNotice" id="hpyataCondition">
+          <div id="yataCondition1">
+            YATA-Fans 會員計劃目的為顧客提供定期推廣訊息及消費獎勵。按「確認」，即表示您已閱讀及同意
+            <span id="yataCondition2tc"
+              style="color: #82A90E; cursor: pointer; text-decoration: underline;">條款及細則</span>
+            ，並希望接收最新的優惠、促銷、折扣或其他類似訊息以獲取消費獎勵。
+          </div>
+        </div>
+      </div>
+
+      <div class="inputRow" style="display:flex;">
+        <button id="yataSubmit" style="z-index: 50">確認</button>
+      </div>
+
+      <!-- <div class="inputRow" style="display:flex;">
+      </div> -->
+      <!-- </form> -->
+    </div>
+
+    <div class="container unified_container " style="height: 0">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <!-- <div id="word"> Join Us</div> -->
+              <div id="api"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div name="footer" style=" height: 100px;"></div> -->
+      <!-- <div id="background_branding_container" data-tenant-branding-background-color="false" style="width: 50%;padding: 5px;">
+      <img id="background_background_image" data-tenant-branding-background="true" style="width:100%;"
+      src="https://hktestadb2c0215.blob.core.windows.net/pages/src/img/HD-RGB-H.png" alt="Illustration" aria-hidden="true" />
+    </div> -->
+      <!-- <div>Foot</div> -->
+    </div>
+
+    <!-- <div style="position:relative"> </div> -->
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript"
+      src="https://yataecuat.blob.core.windows.net/websources/materials/rolldate.min.js"></script>
+    <script src="https://yataecuat.blob.core.windows.net/websources/signup02.js" type="text/javascript"> </script>
+</body>
+
+<style>
+  #simplemodal-overlay {
+    background: transparent
+  }
+</style>
+
+<script>
+  $('body').on('DOMNodeInserted', function (e) {
+    if ($(e.target).attr('id') == 'verifying_blurb') {
+
+      $(e.target).html("")
+    }
+  });
+
+</script>
+
+</html>

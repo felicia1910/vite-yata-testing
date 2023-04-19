@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=0"/> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yata eShop</title>
+  <link rel="stylesheet" type="text/css" href="https://yataecuat.blob.core.windows.net/websources/general.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+</head>
+
+<style>
+  :-internal-direct-focus {
+    outline-color: #6A3B0D;
+  }
+
+  input:focus {
+    outline-color: #6A3B0D;
+  }
+
+  body {
+    font-family: 'Source Sans Pro', sans-serif;
+    color: #6A3B0D;
+  }
+
+  input[type='text'],
+  input[type='number'],
+  input[type='tel'],
+  input[type='password'],
+  textarea {
+    font-size: 18px;
+    padding-left: 3px;
+    font-family: 'Source Sans Pro', sans-serif;
+    border-bottom: 1px solid #6A3B0D;
+  }
+
+  #phoneInput:focus-visible,
+  input:focus-visible,
+  input:focus {
+    outline: 0px;
+    color: #6A3B0D;
+    border: 0px;
+    border-bottom: 1px solid #6A3B0D;
+  }
+
+  #api {
+    display: none;
+  }
+
+  .inputRow {
+    display: flex;
+    justify-content: center;
+    /* padding: 3% 7%; */
+    width: 92vw;
+    max-width: 380px;
+    min-width: 230px;
+    box-sizing: border-box;
+    margin: 5px 0;
+  }
+
+  #usernameNotice {
+    color: red;
+  }
+
+  #countryCode {
+    height: 30px;
+    margin: 8px 10px 8px 0;
+    border: 0;
+    box-sizing: border-box;
+    background-color: transparent;
+    border-bottom: 1px solid #6A3B0D;
+  }
+
+  #formSumbit {
+    /* width: 90%; */
+    width: 330px;
+    height: 50px;
+    background-color: #82A90E;
+    border: 0px;
+    color: #FFF;
+    border-radius: 8px;
+    padding: 3px;
+    margin: 20px 0;
+    font-size: 18px;
+    z-index: 100;
+    cursor: pointer;
+  }
+
+  /* .create,
+  #signInName,
+  #forgotPassword,
+  .password-label,
+  #next {
+    display: none ;
+  } */
+
+  #phoneVerificationControl_success_message {
+    color: #82A90E;
+  }
+
+  #yataCountryCode,
+  #phoneInput {
+    border: 0px solid lightgray;
+    border-bottom: 1px solid #6A3B0D;
+    margin-right: 12px;
+    height: 36px;
+    font-size: 18px;
+    padding: 0;
+    margin: 10px 5px 5px 0;
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+
+  .ccPhone {
+    display: flex;
+    align-items: center;
+  }
+
+  #simplemodal-overlay {
+    background: transparent
+  }
+
+  .mainContainer {
+    height: 340px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .reminder {
+    color: #82A90E;
+    font-size: 14px;
+
+  }
+
+  .reminderRow {
+    width: 92vw;
+    max-width: 380px;
+    min-width: 230px;
+  }
+</style>
+
+<body>
+  <div class="mainContainer">
+    <div class="container unified_container ">
+      <!-- <div class="row">
+          <div class="topBar">
+            <img style='width:100%'
+              src="https://yataloyaltyuat2022.blob.core.windows.net/appstorage/material/topBar.jpg" />
+          </div>
+        </div> -->
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="panel panel-default">
+
+            <form action="?">
+              <div class="panel-body">
+                <div class="inputRow">
+                  <div class="ccPhone" style="width:100%; display:flex">
+                    <select name="code" id="yataCountryCode">
+                      <option value="852" selected>+852</option>
+                      <option value="853">+853</option>
+                      <option value="86">+86</option>
+                    </select>
+                    <input id="phoneInput" type="tel" pattern="[0-9]{8}" placeholder="手提電話號碼" title="Just number. "
+                      required />
+                  </div>
+                </div>
+                <div class="reminderRow">
+                  <div class="reminder">請用 YATA-Fans 登入，如未成為 YATA-Fans 請按此加入</div>
+                </div>
+                <div class="inputRow">
+                  <div id="usernameNotice"> </div>
+                </div>
+                <div class="inputRow">
+                  <button id='formSumbit' type="submit">登入 / 註冊</button>
+                </div>
+                <div class="inputRow">
+                  <div id="forgotPass"> </div>
+                </div>
+              </div>
+              <!-- <div id="phoneInputError"></div> -->
+
+              <div class="panel-body">
+                <div id="api">
+                </div>
+              </div>
+
+              <div class="panel-body">
+              </div>
+              <!-- <div class="inputRow" > 
+                        <div id="counterMsd"> Pleased fill in within </div>
+                        <div id="timer">""</div>
+                        <div id="counterMsd"> s. </div>
+                      </div> -->
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div>Foot</div> -->
+  </div>
+
+  <script src="https://yataecuat.blob.core.windows.net/websources/checkAcc.js" type="text/javascript"> </script>
+</body>
+
+<script>
+
+  $('body').on('DOMNodeInserted', function (e) {
+    if ($(e.target).attr('id') == 'verifying_blurb') {
+      $(e.target).html("")
+    }
+  });
+
+</script>
+
+</html>

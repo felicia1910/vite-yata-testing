@@ -1,0 +1,302 @@
+div.divider,
+.intro,
+div.intro,
+label,
+a.helpLink.tiny,
+#email_ver_input_label {
+  display: none;
+}
+
+.error {
+  color: red;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="tel"],
+input[type="password"],
+input[type="email"],
+textarea {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  /* appearance: none; */
+  padding: 0;
+  margin-top: 0;
+  font-size: 18px;
+  border-radius: 0;
+}
+
+select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  height: 30px;
+  margin: 0px 10px 8px 0;
+  border: 0;
+  box-sizing: border-box;
+  background-color: transparent;
+  border-bottom: 1px solid #6a3b0d;
+  font-size: 16px;
+  color: #6a3b0d;
+  width: 40%;
+  background-image: url(https://yataecuat.blob.core.windows.net/websources/materials/arrow_down.png);
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+
+.ccPhone select#yataCountryCode {
+  color: #6a3b0d;
+  height: 38px;
+  margin-right: 20px;
+}
+
+.ccPhone #phoneInput::placeholder {
+  color: #b7b7b7;
+}
+
+.ccPhone #phoneInput {
+  border-bottom: 1px solid #6a3b0d;
+  color: #6a3b0d;
+}
+
+.ccPhone #phoneInput:focus-visible,
+.ccPhone #phoneInput:focus {
+  outline: 0px;
+  color: #82a90e;
+  border: 0px;
+  border-bottom: 2px solid #82a90e;
+}
+
+#signupFrom #yatatitle {
+  width: 30%;
+}
+
+div.api_container {
+  padding-top: 0;
+}
+
+.panel {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+body {
+  /* background-color:#A5CD39; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 18px;
+  margin: 0;
+  font-family: "Source Sans Pro", sans-serif;
+  /* justify-content: center; */
+  -webkit-appearance: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+}
+
+.mainContainer {
+  color: lightgray;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* max-width: 700px;
+  min-width: 230px; */
+  /* padding: 5%; */
+  border: none;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+
+.mainContainer::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+.header {
+  background-color: #a5cd39;
+
+  width: 100vw;
+  height: 9vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  padding: 5px 8%;
+  box-sizing: border-box;
+  color: white;
+}
+
+.header > h2,
+h4,
+h1 {
+  color: white;
+}
+
+.container {
+  width: 100%;
+  padding: 0;
+
+  border: 0rem;
+  position: relative;
+}
+
+.panel {
+  height: 90%;
+  border: 0px;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+div.panel-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 3%;
+  padding-bottom: 2%;
+}
+
+#api {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
+  max-width: 380px;
+  min-width: 230px;
+  width: 80vw;
+  color: #000;
+}
+
+#attributeVerification {
+  max-width: 380px;
+}
+
+/* verifyInput {
+} */
+
+div#attributeList.attr > ul {
+  list-style-type: none;
+}
+
+div.entry,
+#localAccountForm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.entry-item {
+  width: 100%;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
+}
+
+input {
+  border: 0rem solid;
+  border-bottom: 1px solid #6a3b0d;
+  padding: 5px 0;
+  margin: 8px 0;
+  width: 90%;
+  height: 30px;
+}
+
+div.buttons,
+div.options {
+  display: flex;
+  justify-content: center;
+  margin: 12;
+  /* width: 100%; */
+
+  padding: 3px;
+  align-items: center;
+  justify-content: center;
+}
+
+button {
+  /* width: 90%; */
+  width: 300px;
+  height: 45px;
+  background-color: #82a90e;
+  border: 0px;
+  color: #fff;
+  border-radius: 25px;
+  padding: 3px;
+}
+
+button:active {
+  color: #4267b2;
+}
+
+.rememberMe {
+  /* width: 80%;
+  display: flex;
+  justify-content: flex-end; */
+  height: 0;
+  display: none;
+}
+
+/* #rememberMe {
+  width: 10%;
+}
+
+.rememberMe label {
+  display: block;
+} */
+
+.password-label {
+  margin: 10px;
+}
+
+#FacebookExchange {
+  width: 200px;
+  border: 0px;
+  background-color: #4267b2;
+  color: #fff;
+  border-radius: 25px;
+  padding: 3px;
+}
+
+div.claims-provider-list-buttons {
+  width: 100%;
+}
+
+div.butt .h2 {
+  font-size: large;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-block-start: 0.5em;
+  margin-block-end: 0.5em;
+}
+
+@media screen and (max-width: 540px) {
+  .panel-body {
+    width: 100vw;
+  }
+
+  #api {
+    width: 92vw;
+  }
+
+  #signInName {
+    width: 90%;
+  }
+}

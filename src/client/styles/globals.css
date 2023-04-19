@@ -1,0 +1,365 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-white text-yata-brown;
+  }
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  /* width: 100vw; */
+  /* height: 100vh; */
+  overflow-x: auto;
+  overflow-y: auto;
+  overflow-y: overlay;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button { 
+	-webkit-appearance: none;
+} 
+select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  padding: 0 8px 0 8px;
+  /* border: 0; */
+  box-sizing: border-box;
+  background-color: transparent;
+  color: #6a3b0d;
+  background-image: url("../public/common/arrow/chevron-down-brown.svg");
+  background-size: 1rem;
+  /* object-fit: contain; */
+  background-repeat: no-repeat;
+  /* background-position: right center; */
+  background-position-y: center;
+  background-position-x: 97%;
+  cursor: pointer;
+}
+.select0 {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  padding: 10px 18px 10px 8px;
+  /* border: 0; */
+  box-sizing: border-box;
+  background-color: transparent;
+  color: #6a3b0d;
+  background-image: url("../public/common/arrow/arrow-green.png");
+  background-size: 0.9rem;
+  /* object-fit: contain; */
+  background-repeat: no-repeat;
+  /* background-position: right center; */
+  background-position-y: center;
+  background-position-x: 97%;
+  cursor: pointer;
+}
+
+.select1 {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  background-position: calc(100% - 12px) center !important;
+  background: url(/cart/7.png) no-repeat;
+}
+/* To remove the arrow of select element in IE */
+.select1::-ms-expand {
+  display: none;
+}
+
+/* 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+} */
+
+img {
+  transition: 0.3s;
+}
+
+button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.lds-roller {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-roller div {
+  animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  transform-origin: 40px 40px;
+}
+.lds-roller div:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #fff;
+  margin: -4px 0 0 -4px;
+}
+.lds-roller div:nth-child(1) {
+  animation-delay: -0.036s;
+}
+.lds-roller div:nth-child(1):after {
+  top: 63px;
+  left: 63px;
+}
+.lds-roller div:nth-child(2) {
+  animation-delay: -0.072s;
+}
+.lds-roller div:nth-child(2):after {
+  top: 68px;
+  left: 56px;
+}
+.lds-roller div:nth-child(3) {
+  animation-delay: -0.108s;
+}
+.lds-roller div:nth-child(3):after {
+  top: 71px;
+  left: 48px;
+}
+.lds-roller div:nth-child(4) {
+  animation-delay: -0.144s;
+}
+.lds-roller div:nth-child(4):after {
+  top: 72px;
+  left: 40px;
+}
+.lds-roller div:nth-child(5) {
+  animation-delay: -0.18s;
+}
+.lds-roller div:nth-child(5):after {
+  top: 71px;
+  left: 32px;
+}
+.lds-roller div:nth-child(6) {
+  animation-delay: -0.216s;
+}
+.lds-roller div:nth-child(6):after {
+  top: 68px;
+  left: 24px;
+}
+.lds-roller div:nth-child(7) {
+  animation-delay: -0.252s;
+}
+.lds-roller div:nth-child(7):after {
+  top: 63px;
+  left: 17px;
+}
+.lds-roller div:nth-child(8) {
+  animation-delay: -0.288s;
+}
+.lds-roller div:nth-child(8):after {
+  top: 56px;
+  left: 12px;
+}
+@keyframes lds-roller {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.react-calendar {
+  width: 280px !important;
+  padding: 12px 16px;
+  max-width: 100%;
+  background-color: #fff;
+  border-radius: 8px;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.125em;
+  overflow: hidden;
+  border: solid 1px #ececec !important;
+}
+
+.react-calendar__navigation button {
+  color: #82a90e;
+  min-width: 44px;
+  background: none;
+  font-size: 16px;
+  margin-top: 8px;
+}
+
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+  background-color: #f1f7de !important;
+}
+
+.react-calendar__navigation button[disabled] {
+  color: #aeaeae;
+  background-color: transparent !important;
+}
+
+abbr[title] {
+  text-decoration: none;
+}
+
+.react-calendar__tile {
+  /* padding: 10px !important; */
+  height: 35.15px !important;
+  transition: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  font-weight: 700;
+}
+
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  background: #a9cd07 !important;
+  border-radius: 100px;
+  font-weight: 700;
+  color: #fff !important;
+}
+
+.react-calendar__tile--now {
+  background: #d4e683 !important;
+  border-radius: 100px;
+  font-weight: 700;
+}
+
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+  background: #a9cd07 !important;
+  border-radius: 100px;
+  font-weight: 700;
+}
+
+.react-calendar__tile--hasActive:enabled:hover,
+.react-calendar__tile--hasActive:enabled:focus {
+  background: #f8f8fa;
+}
+
+.react-calendar__tile--active {
+  background: #82a90e !important;
+  border-radius: 100px !important;
+  font-weight: 700;
+  color: white;
+}
+
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+  background: #82a70e !important;
+  color: white;
+}
+
+.react-calendar__tile:disabled {
+  background-color: transparent !important;
+  color: #999999;
+  font-weight: normal;
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: #82a70e !important;
+}
+
+.react-calendar__month-view__days__day--weekend:disabled {
+  color: #999999 !important;
+}
+.text-cat-pro-list {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pagination-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  background: #fff;
+  box-shadow: none;
+  border: none !important;
+}
+
+.pagination > li > a {
+  display: block;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  background: 0 0;
+  border: none;
+  border-right: 2px solid #f4f4f4;
+  text-align: center;
+  border-radius: 20px;
+}
+
+.pagination-item {
+  display: block;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  line-height: 60px;
+  background: 0 0;
+  border: none;
+  border-right: 2px solid #f4f4f4;
+  cursor: pointer;
+}
+.pagination-item:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.pagination-item.active {
+  background: rgb(130 169 14 / var(--tw-bg-opacity));
+  color: #fff;
+}
+
+.pagination > li {
+  width: auto;
+  height: auto;
+  line-height: 1;
+  display: inline-block;
+}
+
+@media screen and (max-width: 540px) {
+  .pagination > li > a {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  ::-webkit-scrollbar,
+  ::-webkit-scrollbar-thumb {
+    width: 14px;
+    border: 3px solid transparent;
+  }
+  ::-webkit-scrollbar-track {
+    opacity: 0;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #d4e683;
+    background-clip: padding-box;
+    opacity: 0.8;
+    border-radius: 12px;
+    box-shadow: inset -1px 1px 4px #c2de76;
+    transition: all 2s ease-out 100ms;
+  }
+}

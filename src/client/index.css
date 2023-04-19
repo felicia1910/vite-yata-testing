@@ -1,0 +1,15 @@
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+
+@import "tailwindcss/utilities";
+
+@import "./styles/globals.css";
+
+@import "./styles/Home.module.css";
+
+.thumbs-wrapper{
+  width: 0;
+  height: 0;
+  display: none;
+}

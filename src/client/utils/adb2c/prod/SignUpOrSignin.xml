@@ -1,0 +1,72 @@
+﻿<TrustFrameworkPolicy 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+  xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06" 
+  PolicySchemaVersion="0.3.0.0" 
+  TenantId="yatafans.onmicrosoft.com" 
+  PolicyId="B2C_1A_eShop_signup_signin" 
+  PublicPolicyUri="http://yatafans.onmicrosoft.com/B2C_1A_eShop_signup_signin" 
+  >
+  <!-- DeploymentMode="Development"
+  UserJourneyRecorderEndpoint="urn:journeyrecorder:applicationinsights" -->
+  <BasePolicy>
+    <TenantId>yatafans.onmicrosoft.com</TenantId>
+    <PolicyId>B2C_1A_eShop_TrustFrameworkExtensions</PolicyId>
+  </BasePolicy>
+  <BuildingBlocks>
+    <ClaimsSchema>
+      <ClaimType Id="signInNames.phoneNumber">
+        <DisplayName>Phone Sign In</DisplayName>
+        <DataType>phoneNumber</DataType>
+      </ClaimType>
+      <!-- <ClaimType Id="birthday">
+				<DisplayName>Birthday</DisplayName>
+				<DataType>string</DataType>
+				<UserInputType>TextBox</UserInputType>
+			</ClaimType>
+      		<ClaimType Id="extension_birthday">
+				<DisplayName>birthday</DisplayName>
+				<DataType>string</DataType>
+				<UserInputType>TextBox</UserInputType>
+			</ClaimType> -->
+    </ClaimsSchema>
+  </BuildingBlocks>
+  <RelyingParty>
+    <DefaultUserJourney ReferenceId="SignUpOrSignIn" />
+    <UserJourneyBehaviors>
+      <SingleSignOn Scope="Tenant" KeepAliveInDays="90" />
+      <SessionExpiryType>Absolute</SessionExpiryType>
+      <SessionExpiryInSeconds>1200</SessionExpiryInSeconds>
+      <!-- <SessionExpiryType>Rolling</SessionExpiryType>
+      <SessionExpiryInSeconds>900</SessionExpiryInSeconds> -->
+      <JourneyInsights TelemetryEngine="ApplicationInsights" InstrumentationKey="33dc5c2c-ddc3-4897-a207-38c336eb5618" DeveloperMode="true" ClientEnabled="false" ServerEnabled="true" TelemetryVersion="1.0.0" />
+      <JourneyFraming Enabled="true" Sources="https://yataecprod.blob.core.windows.net https://localhost:3000 https://eshop.yata.hk/" />
+      <ScriptExecution>Allow</ScriptExecution>
+    </UserJourneyBehaviors>
+    <TechnicalProfile Id="PolicyProfile">
+      <DisplayName>PolicyProfile</DisplayName>
+      <Protocol Name="OpenIdConnect" />
+      <OutputClaims>
+        <OutputClaim ClaimTypeReferenceId="displayName" />
+        <OutputClaim ClaimTypeReferenceId="givenName" />
+        <OutputClaim ClaimTypeReferenceId="surname" />
+        <OutputClaim ClaimTypeReferenceId="extension_birthday" PartnerClaimType="birthday" />
+        <OutputClaim ClaimTypeReferenceId="extension_email" PartnerClaimType="email" />
+        <OutputClaim ClaimTypeReferenceId="extension_promotionCode" PartnerClaimType="promotionCode" />
+        <OutputClaim ClaimTypeReferenceId="extension_lang" PartnerClaimType="lang" />
+        <OutputClaim ClaimTypeReferenceId="extension_title" PartnerClaimType="title" />
+        <OutputClaim ClaimTypeReferenceId="extension_cc" PartnerClaimType="countryCode" />
+        <OutputClaim ClaimTypeReferenceId="extension_nNumber" PartnerClaimType="PhoneNumber" />
+        <!-- <OutputClaim ClaimTypeReferenceId="birthday" /> -->
+        <OutputClaim ClaimTypeReferenceId="scope" />
+        <OutputClaim ClaimTypeReferenceId="signInNames.phoneNumber" />
+        <OutputClaim ClaimTypeReferenceId="objectId" PartnerClaimType="sub" />
+        <OutputClaim ClaimTypeReferenceId="identityProvider" />
+        <OutputClaim ClaimTypeReferenceId="tenantId" AlwaysUseDefaultValue="true" DefaultValue="{Policy:TenantObjectId}" />
+        <OutputClaim ClaimTypeReferenceId="isForgotPassword" DefaultValue="false" />
+        <OutputClaim ClaimTypeReferenceId="trustFrameworkPolicy" Required="true" DefaultValue="{policy}" />
+      </OutputClaims>
+      <SubjectNamingInfo ClaimType="sub" />
+    </TechnicalProfile>
+  </RelyingParty>
+</TrustFrameworkPolicy>

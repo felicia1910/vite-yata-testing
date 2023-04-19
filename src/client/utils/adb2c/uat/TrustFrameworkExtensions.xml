@@ -1,0 +1,183 @@
+﻿<TrustFrameworkPolicy 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+  xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06" 
+  PolicySchemaVersion="0.3.0.0" 
+  TenantId="YataLoyaltyUat.onmicrosoft.com" 
+  PolicyId="B2C_1A_eShop_TrustFrameworkExtensions" 
+  PublicPolicyUri="http://YataLoyaltyUat.onmicrosoft.com/B2C_1A_eShop_TrustFrameworkExtensions" 
+>
+  <BasePolicy>
+    <TenantId>YataLoyaltyUat.onmicrosoft.com</TenantId>
+    <PolicyId>B2C_1A_eShop_TrustFrameworkLocalization</PolicyId>
+  </BasePolicy>
+  <BuildingBlocks>
+    <ClaimsSchema>
+      <!-- <ClaimType Id="countryCode">
+        <DisplayName>Phone Number</DisplayName>
+        <DataType>string</DataType>
+        <UserHelpText>Phone Number</UserHelpText>
+        <UserInputType>DropdownSingleSelect</UserInputType>
+        <Restriction>
+        <Enumeration Text="Hong Kong(+852)" Value="HK" SelectByDefault="true" />
+        <Enumeration Text="Macao(+853)" Value="MO" />
+        <Enumeration Text="China(+86)" Value="CN" />
+      </Restriction>
+      </ClaimType> -->
+      <ClaimType Id="signInNames.phoneNumber">
+        <DisplayName>Phone</DisplayName>
+        <!-- <DataType>string</DataType> -->
+        <DataType>phoneNumber</DataType>
+        <UserHelpText>Phone number to use for signing in.</UserHelpText>
+        <UserInputType>TextBox</UserInputType>
+      </ClaimType>
+    </ClaimsSchema>
+    <ContentDefinitions>
+      <ContentDefinition Id="api.signuporsignin">
+        <LoadUri>https://yataecuat.blob.core.windows.net/websources/login01.html</LoadUri>
+        <!-- <LoadUri>https://yataloyaltyuat2022.blob.core.windows.net/root/emty.html</LoadUri> -->
+        <!-- <LoadUri>https://yatahkuat418.blob.core.windows.net/root/emty1.html</LoadUri> -->
+        <!-- <LoadUri>~/tenant/templates/AzureBlue/unified.cshtml</LoadUri> -->
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:unifiedssp:2.1.5</DataUri>
+        <!-- <DataUri>urn:com:microsoft:aad:b2c:elements:contract:unifiedssp:1.1.0</DataUri> -->
+        <Metadata>
+          <Item Key="DisplayName">Signin and Signup</Item>
+        </Metadata>
+        <LocalizedResourcesReferences MergeBehavior="Prepend">
+          <LocalizedResourcesReference Language="en" LocalizedResourcesReferenceId="api.signuporsignin.en" />
+        </LocalizedResourcesReferences>
+      </ContentDefinition>
+      <ContentDefinition Id="phoneSignIn">
+        <!-- <LoadUri>~/tenant/templates/AzureBlue/exception.cshtml</LoadUri> -->
+        <LoadUri>https://yataecuat.blob.core.windows.net/websources/checkAcc.html</LoadUri>
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.1</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Verify phone to sign in</Item>
+        </Metadata>
+        <!-- <LocalizedResourcesReferences MergeBehavior="Prepend">
+          <LocalizedResourcesReference Language="en" LocalizedResourcesReferenceId="phoneSignIn.en" />
+        </LocalizedResourcesReferences> -->
+      </ContentDefinition>
+      <ContentDefinition Id="phoneSignUp">
+        <LoadUri>https://yataecuat.blob.core.windows.net/websources/signup01.html</LoadUri>
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.1</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Verify phone to sign up</Item>
+        </Metadata>
+        <LocalizedResourcesReferences MergeBehavior="Prepend">
+          <LocalizedResourcesReference Language="en" LocalizedResourcesReferenceId="phoneSignUp.en" />
+        </LocalizedResourcesReferences>
+      </ContentDefinition>
+      <ContentDefinition Id="phoneSignUp2">
+        <LoadUri>https://yataecuat.blob.core.windows.net/websources/signup01.html</LoadUri>
+        <!-- <LoadUri>~/tenant/templates/AzureBlue/selfAsserted.cshtml</LoadUri> -->
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <!-- <DataUri>urn:com:microsoft:aad:b2c:elements:contract:unifiedssp:2.1.2</DataUri> -->
+        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.1</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Verify phone to sign up</Item>
+        </Metadata>
+        <!-- <LocalizedResourcesReferences MergeBehavior="Prepend">
+          <LocalizedResourcesReference Language="en" LocalizedResourcesReferenceId="phoneSignUp.en" />
+        </LocalizedResourcesReferences> -->
+      </ContentDefinition>
+      <ContentDefinition Id="api.selfasserted-oldtonew">
+        <LoadUri>https://yataecuat.blob.core.windows.net/websources/changePW.html</LoadUri>
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.7</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Collect information from user page</Item>
+        </Metadata>
+      </ContentDefinition>
+      <!-- <ContentDefinition Id="phonePWchange">        
+        <LoadUri>https://yataloyaltyuat2022.blob.core.windows.net/appstorage/changePW.html</LoadUri>
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.1</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Verify phone to sign up</Item>
+        </Metadata>
+      </ContentDefinition> -->
+      <ContentDefinition Id="api.localaccountsignup">
+        <LoadUri>https://yataecuat.blob.core.windows.net/websources/signup02.html</LoadUri>
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.7</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Local account sign up page</Item>
+        </Metadata>
+      </ContentDefinition>
+      <ContentDefinition Id="api.selfasserted">
+        <!-- <LoadUri>https://yataecuat.blob.core.windows.net/websources/login01.html</LoadUri> -->
+        <!-- <LoadUri>https://yataloyaltyuat2022.blob.core.windows.net/root/emty.html</LoadUri> -->
+        <!-- <LoadUri>~/tenant/templates/AzureBlue/unified.cshtml</LoadUri> -->
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.7</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Collect information from user page</Item>
+        </Metadata>
+      </ContentDefinition>
+      <ContentDefinition Id="api.phonefactor">
+        <LoadUri>~/tenant/templates/AzureBlue/unified.cshtml</LoadUri>
+        <!-- <LoadUri>https://yataloyaltyuat2022.blob.core.windows.net/appstorage/unified100.html</LoadUri> -->
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:multifactor:1.2.5</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Multi-factor authentication page</Item>
+        </Metadata>
+      </ContentDefinition>
+      <ContentDefinition Id="api.localaccountpasswordchange1">
+        <!-- <LoadUri>https://yataloyaltyuat2022.blob.core.windows.net/appstorage/forgotpassword01.html</LoadUri>
+        -->
+        <LoadUri>~/tenant/templates/AzureBlue/unified.cshtml</LoadUri>
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.7</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Local account change password page</Item>
+        </Metadata>
+      </ContentDefinition>
+      <ContentDefinition Id="api.localaccountpasswordreset">
+        <LoadUri>https://yataecuat.blob.core.windows.net/websources/forgotpassword01.html</LoadUri>
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:contract:selfasserted:2.1.7</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Local account change password page</Item>
+        </Metadata>
+      </ContentDefinition>
+    </ContentDefinitions>
+  </BuildingBlocks>
+  <ClaimsProviders>
+    <ClaimsProvider>
+      <DisplayName>Facebook</DisplayName>
+      <TechnicalProfiles>
+        <TechnicalProfile Id="Facebook-OAUTH">
+          <Metadata>
+            <Item Key="client_id">1822822744592546</Item>
+            <Item Key="scope">email public_profile</Item>
+            <Item Key="ClaimsEndpoint">https://graph.facebook.com/me?fields=id,first_name,last_name,name,email</Item>
+          </Metadata>
+        </TechnicalProfile>
+      </TechnicalProfiles>
+    </ClaimsProvider>
+    <ClaimsProvider>
+      <DisplayName>Local Account SignIn</DisplayName>
+      <TechnicalProfiles>
+        <TechnicalProfile Id="login-NonInteractive">
+          <Metadata>
+            <Item Key="client_id">d8b669d8-4c50-41e4-b6f4-c8ce495541cb</Item>
+            <Item Key="IdTokenAudience">08130003-694b-4ec5-a261-150efa197fff</Item>
+          </Metadata>
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="client_id" DefaultValue="d8b669d8-4c50-41e4-b6f4-c8ce495541cb" />
+            <InputClaim ClaimTypeReferenceId="resource_id" PartnerClaimType="resource" DefaultValue="08130003-694b-4ec5-a261-150efa197fff" />
+          </InputClaims>
+        </TechnicalProfile>
+      </TechnicalProfiles>
+    </ClaimsProvider>
+    <!--yata-->
+  </ClaimsProviders>
+  <!--UserJourneys>
+	
+	</UserJourneys-->
+</TrustFrameworkPolicy>

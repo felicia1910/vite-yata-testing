@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>YATA eShop SignUp</title>
+
+  <title>reCAPTCHA demo: Simple page</title>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <link rel="stylesheet" type="text/css" href="https://yataecuat.blob.core.windows.net/websources/general.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+</head>
+
+<style>
+  input[type='text'],
+  input[type='number'],
+  input[type='tel'],
+  textarea {
+    font-size: 16px;
+    font-family: 'Source Sans Pro', sans-serif;
+    padding-left: 10px;
+  }
+
+  input:focus {
+    border: 2px solid #D4E683;
+  }
+
+  a.helpLink.tiny {
+    display: none;
+  }
+
+  .container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .otpPanel {
+    display: none;
+    position: absolute;
+    background-color: white;
+    height: 100vh;
+    width: 100%;
+    max-width: 700px;
+    /* padding: 0 7%; */
+  }
+
+  #api {
+    display: none;
+  }
+
+  .insider {
+    width: 100%;
+    box-sizing: border-box;
+    /* padding: 3px 7%; */
+    padding: 0 7%;
+    text-align: center;
+    /* margin: 3% 0 2%; */
+  }
+
+  .container {
+    width: 100vw;
+  }
+
+  #oldUserNotice {
+    display: none;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    position: absolute;
+    background-color: white;
+    height: 100vh;
+    width: 100%;
+    max-width: 700px;
+  }
+
+  .noticeBox {
+    margin-top: 150px;
+    padding: 6%;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #82A90E;
+    box-sizing: border-box;
+    width: 60%;
+    min-width: 320px;
+    height: 400px;
+    border-radius: 8px;
+  }
+
+  .btnrow {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0 10px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  button {
+    width: 330px;
+    height: 50px;
+    background-color: #82A90E;
+    border: 0px;
+    color: #FFF;
+    border-radius: 8px;
+    padding: 3px;
+    margin: 8px 0;
+    font-size: 18px;
+    z-index: 100;
+    cursor: pointer;
+  }
+
+  .otppHeader {
+    margin-top: 7vh;
+    /* margin-bottom: 10px; */
+  }
+
+  .otppBody {}
+
+  .digiContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+
+  .digiBox {
+    width: 60px;
+    max-height: 80px;
+    margin: 0 5px;
+    box-sizing: border-box;
+    border-bottom-width: 0;
+    border-radius: 10px !important;
+    background-color: #EEEEEE;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    color: #6a3b0d;
+    font-family: 'Source Sans Pro', sans-serif;
+    aspect-ratio: 3/4;
+    /* padding-left: 10px; */
+  }
+
+  .miniBox {
+
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: aqua; */
+  }
+
+  h2 {
+    text-align: left;
+    color: #82A90E;
+  }
+
+  h4 {
+    color: #6a3b0d;
+    text-align: left;
+  }
+
+  h5 {
+    /* color:lightgray; */
+    color: lightsalmon;
+    font-size: 13px;
+    margin: 3%;
+  }
+
+  :focus-visible {
+    outline: 1px solid lightgray;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  #nationalNumber,
+  #countryCode {
+    display: none;
+  }
+
+  #resendBtn {
+    color: #82A90E;
+    background-color: transparent;
+    margin-top: 4px;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  .otpMsg {
+    font-size: 16px;
+    color: #6a3b0d;
+  }
+</style>
+
+<body>
+  <div class="mainContainer">
+
+    <!-- <div class="header">
+      <h2 style="color:white">
+        < Verify </h2>
+    </div> -->
+
+    <div class="container unified_container ">
+      <div id="oldUserNotice">
+        <div class="noticeBox">
+          <h4 id="welcome">歡迎</h4>
+          <h4 id="welcomeMsg">現有會員需重新設定登入密碼，以使用全新 YATA-Fans app 及 YATA eShop</h4>
+          <div class="btnrow">
+            <button id="ntcConfirm">確定</button>
+            <button id="ntcCancel">取消</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="otpPanel " id="otpPanel">
+      <div class="otppHeader insider">
+        <!-- <h2>Enter verification code</h2> -->
+        <div style="width: 100%; text-align: left;">
+          <div class="otpMsg">我們已透過短訊傳送了驗證碼給您</div>
+        </div>
+        <input type="number" id="specInput" pattern="\d*" style="opacity: 0; height: 0;"
+          oninput="this.value=this.value.slice(0,this.maxLength)" maxlength="6" />
+      </div>
+
+      <div class="otppBody insider">
+        <div class="digiContainer" id="otp">
+          <div style="border-radius: 10px;font-size:44px" class="digiBox" id="box1"></div>
+          <div style="border-radius: 10px;font-size:44px" class="digiBox" id="box2"></div>
+          <div style="border-radius: 10px;font-size:44px" class="digiBox" id="box3"></div>
+          <h1 style="color: #6a3b0d"> - </h1>
+          <div style="border-radius: 10px;font-size:44px" class="digiBox" id="box4"></div>
+          <div style="border-radius: 10px;font-size:44px" class="digiBox" id="box5"></div>
+          <div style="border-radius: 10px;font-size:44px" class="digiBox" id="box6"></div>
+        </div>
+
+        <div class="digiContainer">
+          <h5 id="otpErrorMsg">
+
+          </h5>
+        </div>
+      </div>
+
+      <div class="otppFooter insider">
+        <button id="otpbtn" type="button">下一步</button>
+        <!-- <button id="cancel" type="button" style="margin-top: 20px;" >Cancel</button> -->
+        <div style="margin:10px;" id="resendWord">
+          <div class="resendRow">
+            <div class="otpMsg" id="vcMsg">我沒有收到驗證碼</div>
+          </div>
+
+          <div class="resendRow" id="counterResendRow">
+            <span class="otpMsg" id="vcWait">請在 &nbsp;</span>
+            <span class="otpMsg" id="counterResend">60</span>
+            <span class="otpMsg" id="vcSec">&nbsp; 秒後嘗試重發驗證碼</span>
+          </div>
+          <!-- <div id="resendBtn">RESEND</div> -->
+          <button id="resendBtn" type="button">重發驗證碼</button>
+        </div>
+
+        <button id="switch" type="button" style="margin-top: 20px;display:none">switch</button>
+      </div>
+    </div>
+
+    <div class="otpPanel " id="errorPanel">
+      <div class="otppHeader insider">
+        <h2 id="ep01">註冊錯誤</h2>
+      </div>
+
+      <div class="otppBody insider">
+        <h4 id="ep02">請聯繫 Yata 客服</h4>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div id="word"> Sign UP page</div>
+            <!-- <input id="testing01" />
+              <input id="testing02" /> -->
+            <!-- <button id="btn" type="button"  >Click Me!</button> -->
+            <div id="api"></div>
+            <!-- <button id="switch2" type="button" style="margin-top: 20px;">switch</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div id="background_branding_container" data-tenant-branding-background-color="false" style="width: 50%;padding: 5px;">
+      <img id="background_background_image" data-tenant-branding-background="true" style="width:100%;"
+      src="https://hktestadb2c0215.blob.core.windows.net/pages/src/img/HD-RGB-H.png" alt="Illustration" aria-hidden="true" />
+    </div> -->
+    <!-- <div>Foot</div> -->
+  </div>
+  <script src="https://yataecuat.blob.core.windows.net/websources/signup01.js" type="text/javascript"> </script>
+
+
+  <script>
+    function onSubmit(token) {
+      document.getElementById("demo-form").submit();
+    }
+    function verify(token) {
+      e.preventdefault()
+      console.log('token', token)
+      //  document.getElementById("demo-form").submit();
+
+    }
+  </script>
+</body>
+
+<style>
+  #simplemodal-overlay {
+    background: transparent
+  }
+</style>
+
+<script>
+  $('body').on('DOMNodeInserted', function (e) {
+    if ($(e.target).attr('id') == 'verifying_blurb') {
+
+      $(e.target).html("")
+    }
+  });
+
+</script>
+
+</html>

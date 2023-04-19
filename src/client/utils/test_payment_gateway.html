@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+<head>
+    <title>RECON Payment Service</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="payment/html; charset=utf-8">
+    <link rel="icon" type="image/png" href="?Tue Jun 21 22:55:10 HKT 2022">
+</head>
+
+<body>
+    <form id="test" name="test" method="post" action="https://recon-uat.cityline.com/ws/b2cPay">
+        <table>
+            <tr>
+                <td>campaign</td>
+                <td><input type="text" name="campaign" id="campaign" value=""></td>
+            </tr>
+            <tr>
+                <td>amt</td>
+                <td><input type="number" name="amt" id="amt" value="50000"></td>
+            </tr>
+            <tr>
+                <td>curr</td>
+                <td><input type="text" name="curr" id="curr" value="HKD"></td>
+            </tr>
+            <tr>
+                <td>desc</td>
+                <td><input type="text" name="desc" id="desc" value="testing"></td>
+            </tr>
+            <tr>
+                <td>lang</td>
+                <td><input type="text" name="lang" id="lang" value="tc"></td>
+            </tr>
+            <tr>
+                <td>merCode</td>
+                <td><input type="text" name="merCode" id="merCode" value="T8519193"></td>
+            </tr>
+            <tr>
+                <td>merRef</td>
+                <td><input type="text" name="merRef" id="merRef" value="test1234"></td>
+            </tr>
+            <tr>
+                <td>notifyUrl</td>
+                <td><input type="text" name="notifyUrl" id="notifyUrl" value="https://www.abc.com/payNotification"></td>
+            </tr>
+            <tr>
+                <td>returnUrl</td>
+                <td><input type="text" name="returnUrl" id="returnUrl" value="https://www.abc.com/payResponse"></td>
+            </tr>
+            <tr>
+                <td>timeout</td>
+                <td><input type="number" name="timeout" id="timeout" value="20"></td>
+            </tr>
+            <tr>
+                <td>sign</td>
+                <td><input type="text" name="sign" id="sign"
+                        value="b26312aba0797e403b4055be7a0b7401b34e967fc1921d8092c8029f4b996dcd"></td>
+            </tr>
+            <tr>
+                <td>signType</td>
+                <td><input type="text" name="signType" value="SHA-256"></td>
+            </tr>
+            <tr>
+                <td>ver</td>
+                <td><input type="text" name="ver" id="ver" value="1"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><button type="button" id="submit_button" class="btn btn-primary">Submit</button></td>
+            </tr>
+        </table>
+    </form>
+</body>
+<script src="./test_payment_gateway.js" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#submit_button").click(function () {
+            var input_str = "amt=" + $("#amt").val() + "&campaign=" + $("#campaign").val() + "&curr=" + $("#curr").val() + "&desc=" + $("#desc").val() + "&lang=" + $("#lang").val() + "&merCode=" + $("#merCode").val() + "&merRef=" + $("#merRef").val() + "&notifyUrl=" + $("#notifyUrl").val() + "&returnUrl=" + $("#returnUrl").val() + "&timeout=" + $("#timeout").val() + "&ver=" + $("#ver").val() + "&05eb7317-8f1d-4f44-b503-02ca1819af0d"
+            //alert(input_str);
+            $("#sign").val(CryptoJS.SHA256(input_str).toString());
+            $("#test").submit();
+        });
+    });
+</script>
