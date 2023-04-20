@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { selectImgUrl } from "../../../redux/config/index";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import {
-  loginProcess,
   selectIsAdmin,
   selectIsAuthenticated,
 } from "../../../redux/auth/slice";
@@ -11,7 +10,6 @@ import {
   openLoginModal,
   selectWindowSize,
 } from "../../../redux/control/slice";
-import AccountList from "../NavBar/AccountList";
 import { useMsal } from "@azure/msal-react";
 import { scope } from "../../../utils/authConfig";
 import { Link, useNavigate,useLocation } from 'react-router-dom';
@@ -71,11 +69,7 @@ const LoginButton = () => {
           className='flex flex-col items-center justify-center w-full h-full p-1 transition-colors duration-300 ease-in-out rounded-lg lg:p-2 lg:flex-row lg:bg-yata-deep lg:hover:bg-yata group'
           onClick={(e) => {
             e.preventDefault();
-            isAuthenticated
-              ? onMobile
-                ? [router("/account"), dispatch(closeDrawer())]
-                : setAccountDropdown(!accountDropdown)
-              :  instance.loginRedirect(silentRequest);
+            router("/account")
           }}
         >
           {/* Icon */}
@@ -114,16 +108,6 @@ const LoginButton = () => {
               : "登入/註冊"}
           </p>
         </button>
-
-        <AccountList
-          accountDropdown={accountDropdown}
-          setAccountDropdown={setAccountDropdown}
-        />
-        {/* {pcheck && (
-          <AdminAccountList
-            accountDropdown={accountDropdown}
-            setAccountDropdown={setAccountDropdown}
-          /> */}
       </div>
     </>
   );

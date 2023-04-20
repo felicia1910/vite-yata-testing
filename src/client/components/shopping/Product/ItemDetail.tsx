@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import Image from "next/image";
 import { useMsal } from "@azure/msal-react";
 
 import ItemColorSize from "./ItemColorSize";
@@ -10,15 +9,10 @@ import WarningModal from "../../modal/WarningModal";
 import { silentRequest } from "../../layout/Buttons/LoginButton";
 
 import { useAppDispatch } from "./../../../redux/store";
-import {
-  addItemToCartThunk,
-  removeWishList,
-  updateWishList,
-} from "../../../redux/shopping/thunk";
 import { useAppSelector } from "../../../redux/store";
-import { selectShippingMode } from "../../../redux/delivery/slice";
+import { selectImgUrl } from "../../../redux/config/index";
 import { selectIsAuthenticated } from "../../../redux/auth/slice";
-import { useRouter } from "next/router";
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
   EWarningType,
   onLoading,
@@ -46,7 +40,9 @@ const ItemDetail = ({ item }: Props) => {
 
   const dispatch = useAppDispatch();
   const { instance } = useMsal();
-  const router = useRouter();
+  const router = useNavigate();
+  const location = useLocation();
+  const imgUrl = useAppSelector(selectImgUrl);
   const [skuQty, setSkuQty] = useState<ICartItemQty>(initSku);
   const [isAddToCart, setIsAddToCart] = useState<{
     success: boolean;
@@ -62,7 +58,6 @@ const ItemDetail = ({ item }: Props) => {
     product: 0,
     inventory: 1,
   });
-  const shippingMode = useAppSelector(selectShippingMode);
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
   const noSkuInfo = skuQty.plu == "" && skuQty.sku == "";
@@ -107,59 +102,16 @@ const ItemDetail = ({ item }: Props) => {
 
   const likeChangeHandler = async (e: any) => {
     e.stopPropagation();
-    if (isAuthenticated) {
-      if (!like) {
-        setLike(true);
-        setTimeout(async () => {
-          const result = await dispatch(updateWishList(item.plu));
-        }, 500);
-      } else {
-        setLike(false);
-        setTimeout(async () => {
-          const result = await dispatch(removeWishList(item.plu));
-        }, 500);
-      }
+
+    if (!like) {
+      setLike(true);
     } else {
-      localStorage.setItem("redirectUrl", router.asPath);
-      instance.loginRedirect(silentRequest);
+      setLike(false);
     }
+
   };
 
   const toggleSubmit = async () => {
-    if (!noSkuInfo) {
-      setBtnLoading(true);
-      // console.log("skuQty", skuQty);
-      setTimeout(async () => {
-        const result: any = await dispatch(addItemToCartThunk(skuQty));
-        // console.log("add item result: ", result);
-        if (result.payload) {
-          if (result.payload.success == 1) {
-            setIsAddToCart({ success: true, err: "" });
-          } else {
-            // console.log("error msg: ", result.payload.err[0].message);
-            dispatch(
-              openWarningModal({
-                type: EWarningType.product,
-                text: result.payload.err[0].message,
-              })
-            );
-          }
-        }
-        setBtnLoading(false);
-        if (!item.options && item.plu && item.sku) {
-          setSkuQty({
-            ...skuQty,
-            qty: 1,
-            plu: item.plu,
-            sku: item.sku,
-            categoryId: item.categoryId,
-          });
-        } else {
-          // console.log("init sku: ", initSku);
-          setSkuQty(initSku);
-        }
-      }, 1000);
-    }
   };
 
   // console.log("item detail: ", item);
@@ -334,16 +286,9 @@ const ItemDetail = ({ item }: Props) => {
           }
           disabled={btnLoading}
           onClick={async () => {
-            if (isAuthenticated) {
-              if (status.product == 0 && status.inventory == 1) {
-                await toggleSubmit();
-              }
-            } else {
-              dispatch(onLoading());
-              localStorage.setItem("redirectUrl", router.asPath);
-              instance.loginRedirect(silentRequest);
+            if (status.product !== 1 && status.product !== 2) {
+              router('/account')
             }
-            // dispatch(openFillAddressModal())
           }}
         >
           {status.product == 0 && (
@@ -351,7 +296,7 @@ const ItemDetail = ({ item }: Props) => {
               {status.inventory == 1 && (
                 <>
                   <div className='relative object-contain w-5 h-5 mr-2'>
-                    <Image src='/homepage/navbar/cart.svg' layout='fill' />
+                    <img src={imgUrl + '/homepage/navbar/cart.svg'} />
                   </div>
                   <span className='underLg:text-sm '>
                     {!btnLoading ? "加入購物車" : "加入中"}
@@ -372,13 +317,12 @@ const ItemDetail = ({ item }: Props) => {
           onClick={likeChangeHandler}
         >
           <div className='relative w-4 h-4 mr-1 transition-all ease-in-out lg:mr-2'>
-            <Image
+            <img
               src={
                 like
-                  ? "/homepage/heart-selected.svg"
-                  : "/homepage/heart-default.svg"
+                  ? imgUrl + "/homepage/heart-selected.svg"
+                  : imgUrl + "/homepage/heart-default.svg"
               }
-              layout='fill'
               alt='heart'
             />
           </div>

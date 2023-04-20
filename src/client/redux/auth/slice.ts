@@ -1,8 +1,5 @@
 import { createSlice, Draft, PayloadAction, SerializedError } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { appLoginThunk, appLogoutThunk, getUserPointThunk, getAppPointThunk, restoreLoginThunk, adminLoginThunk } from './thunk';
-//import jwt from 'jsonwebtoken';
-import { stat } from "fs";
 
 export interface IAdb2cUserInfo {
   iss?: string;
@@ -137,175 +134,13 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    loginProcess: (state: Draft<typeof initialState>) => {
-      state.isAuthenticated = false;
-      state.isLoginProcessing = true;
-    },
-    loginSuccess: (
-      state: Draft<typeof initialState>,
-      action: PayloadAction<{ adb2cUser: IAdb2cUserInfo, crmUser: ID365User }>
-    ) => {
-      state.isAuthenticated = true;
-      state.isLoginProcessing = false;
-      state.adb2cUser = action.payload.adb2cUser;
-      state.crmUser = action.payload.crmUser;
-    },
-    loginFailure: (
-      state: Draft<typeof initialState>,
-      action: PayloadAction<string>
-    ) => {
-      state.isAuthenticated = false;
-      state.isLoginProcessing = false;
-      state.error = action.payload;
-    },
-    logout: (state: Draft<typeof initialState>) => {
-      state.isAuthenticated = false;
-      state.isLoginProcessing = false;
-      state.adb2cUser = null;
-      state.crmUser = null
-      state.userId = null;
-      localStorage.removeItem('adb2c_access_token')
-    },
-    getUserId: (
-      state: Draft<typeof initialState>,
-      action: PayloadAction<string | null>
-    ) => {
-      state.userId = action.payload
-    },
-    saveCodeVerifier: (
-      state: Draft<typeof initialState>,
-      action: PayloadAction<{ codeVerifier: string, codeChallenge: string }>
-    ) => {
-      state.codeVerifier = action.payload.codeVerifier;
-      state.codeChallenge = action.payload.codeChallenge
-    },
-    setCurrentPolicy: (
-      state: Draft<typeof initialState>,
-      action: PayloadAction<string>
-    ) => {
-      state.currentPolicy = action.payload
-      localStorage.setItem('currentPolicy', action.payload)
-    },
-    loginAsAdmin: (state, { payload }: PayloadAction<boolean>) => {
-        state.isAdminLogin = payload
-        state.adb2cUser = null;
-        localStorage.removeItem('adb2c_access_token')
-    },
-    loginAdminMemberSuccess: (state, action: PayloadAction<IAdminUser>) => {
-      state.adminUser = action.payload
-    },
-    initAdminUser: (state) => {
-      state.adminUser = null
-      state.adminGrabUser = null
-    },
-    initCrmGrabUser: (state) => {
-      state.isAuthenticated = false;
-      state.adminGrabUser = null
-    },
-    userGetByAdmin: (
-      state: Draft<typeof initialState>,
-      action: PayloadAction<{ adminGrabUser: ID365User }>
-    ) => {
-      state.isAuthenticated = true;
-      state.isLoginProcessing = false;
-      state.adminGrabUser = action.payload.adminGrabUser;
-      state.crmUser = action.payload.adminGrabUser;
-
-    },
-    // setDeliveryMethod: (
-    //   state: Draft<typeof initialState>,
-    //   action: PayloadAction<EShippingMode>
-    // ) => {
-    //   state.deliveryOption = action.payload
-    // }
   },
   extraReducers: builder => {
-    builder.addCase(appLoginThunk.pending, (
-      state: Draft<typeof initialState>
-    ) => {
-      state.isAuthenticated = false;
-      state.isLoginProcessing = true;
-    });
-
-    builder.addCase(getAppPointThunk.fulfilled, (state, action: PayloadAction<IUserPoints[]>) => {
-        state.pointList = action.payload
-    });
-    builder.addCase(getUserPointThunk.fulfilled, (state, action: PayloadAction<ITotalUserPoint>) => {
-      state.totalPoint = action.payload
-  });
-    
-    builder.addCase(appLoginThunk.fulfilled, (
-      state: Draft<typeof initialState>,
-      action: PayloadAction<typeof initialState>
-    ) => {
-      state.isAuthenticated = true;
-      state.isLoginProcessing = false;
-      state.adb2cUser = action.payload.adb2cUser
-    });
-    builder.addCase(appLoginThunk.rejected, (state, action) => {
-      state.error = action.error
-    });
-    builder.addCase(adminLoginThunk.fulfilled, (
-      state: Draft<typeof initialState>,
-      action: PayloadAction<IAdminUser>
-      ) => {
-      console.log('adminLoginThunkfulfilled',action.payload)
-      state.isAdminLogin = true;
-      state.adminUser = action.payload;
-    });
-    builder.addCase(adminLoginThunk.rejected, (state, action) => {
-      console.log('adminLoginThunkfulfillrejecteded',)
-      state.isAdminLogin = false;
-      // state.error = action.error
-    });
-    builder.addCase(appLogoutThunk.fulfilled, (
-      state: Draft<typeof initialState>,
-    ) => {
-      state.isAuthenticated = false;
-      state.isLoginProcessing = false;
-      state.adb2cUser = initialState.adb2cUser
-    });
-    builder.addCase(appLogoutThunk.rejected, (state, action) => {
-      state.error = action.error
-    });
-
-    builder.addCase(restoreLoginThunk.fulfilled, (
-      state: Draft<typeof initialState>,
-      action: PayloadAction<IAdb2cUserInfo>
-    ) => {
-      state.isAuthenticated = true
-      state.isLoginProcessing = false
-      state.adb2cUser = action.payload
-    });
-    builder.addCase(restoreLoginThunk.pending, (
-      state: Draft<typeof initialState>
-    ) => {
-      state.isAuthenticated = false;
-      state.isLoginProcessing = true;
-    });
-    builder.addCase(restoreLoginThunk.rejected, (state, action) => {
-      state.isAuthenticated = false;
-      state.isLoginProcessing = false;
-      state.error = action.error
-      state.adb2cUser = initialState.adb2cUser
-      localStorage.removeItem('adb2c_access_token')
-    });
   }
 });
 
 export const {
-  loginProcess,
-  loginSuccess,
-  loginFailure,
-  logout,
-  getUserId,
-  saveCodeVerifier,
-  setCurrentPolicy,
-  loginAsAdmin,
-  loginAdminMemberSuccess,
-  initAdminUser,
-  initCrmGrabUser,
-  userGetByAdmin
+
   // setDeliveryMethod
 } = authSlice.actions
 

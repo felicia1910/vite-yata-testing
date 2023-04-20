@@ -91,41 +91,6 @@ const OtherButtons = ({ window }: WindowProps) => {
           </p>
         </div>
       </Link>
-
-      {/* <Link href={"https://egift.yata.hk/"}>
-        <button className='flex items-center justify-center w-full h-12 mx-1 lg:block lg:w-auto lg:min-w-fit'>
-          <div className='relative object-contain w-24 h-8 '>
-            <Image src={"/homepage/navbar/e-gift.png"} layout='fill' />
-          </div>
-        </button>
-      </Link> */}
-
-      {/* <div className='flex items-center justify-center w-12 lg:mx-4 md:mx-2 group'>
-        <p
-          id='en'
-          onClick={handleClick}
-          className={`hidden transition duration-300 ease-in-out cursor-pointer 
-            ${
-              onLaptop &&
-              "text-sm group-hover:text-yata group-hover:font-semibold"
-            }`}
-        >
-          English
-        </p>
-      </div>
-      <div className='flex items-center justify-center w-12 lg:mx-4 md:mx-2 group'>
-        <p
-          id='zh'
-          onClick={handleClick}
-          className={`hidden transition duration-300 ease-in-out cursor-pointer 
-            ${
-              onLaptop &&
-              "text-sm group-hover:text-yata group-hover:font-semibold"
-            }`}
-        >
-          Chinese
-        </p>
-      </div> */}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { RefObject, useEffect, useState } from "react"
 import { useWindowDimensions } from './useWindowDimensions';
-import { useRouter } from 'next/router';
+import { Link, useNavigate,useLocation } from 'react-router-dom';
 
 export const useGridCols = (
   boxRef: RefObject<HTMLDivElement>,
@@ -9,7 +9,7 @@ export const useGridCols = (
 ) => {
   const [gridCols, setGridCols] = useState<string>()
   const windowDimensions = useWindowDimensions()
-  const router = useRouter()
+  const location=useLocation();
 
   useEffect(() => {
     if (boxRef.current && containerRef.current) {
@@ -39,6 +39,6 @@ export const useGridCols = (
       // console.log(cols)
       // console.log(containerRef.current.scrollWidth % boxRef.current.scrollWidth)
     }
-  }, [containerRef, boxRef, windowDimensions, router.asPath])
+  }, [containerRef, boxRef, windowDimensions, location.pathname])
   return gridCols
 }

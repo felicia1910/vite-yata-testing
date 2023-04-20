@@ -42,15 +42,10 @@ const ShoppingCartButton = ({ window }: WindowProps) => {
         }
         `}
         onClick={() => {
-          isAuthenticated
-            ? router("/shopping-cart")
-            : [
-                localStorage.setItem("redirectUrl", "/shopping-cart"),
-                instance.loginRedirect(silentRequest),
-              ];
+          router("/account");
         }}
       >
-        <Link to='/shopping-cart'>
+        <Link to='/account"'>
           <>
             <div className='relative flex items-center object-contain lg:w-5 w-8 aspect-[14/13]'>
             <img src={

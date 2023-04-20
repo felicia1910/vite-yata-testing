@@ -1,28 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Component } from "react";
-import { NextPageContext } from "next";
-import Link from "next/link";
 import FullLoading from "../../components/common/FullLoading";
 import { useAppSelector } from "../../redux/store";
 import { selectWindowSize } from "../../redux/control/slice";
-import { useRouter } from "next/router";
+import { Link, useNavigate,useLocation } from 'react-router-dom';
 import { storesDetailList } from "../../utils/contents/storeDetailList";
 import ReturnButton from "../../components/common/ReturnButton";
 
-// function getstoreDataById(id) {
-//   for (let i = 0; i < stores.length; i++) {
-//     if (stores[i].id === parseInt(id)) {
-//       return stores[i];
-//     }
-//   }
-// }
 
 type Props = {
   id: string;
 };
 
 function Store({ id }: Props) {
-  const router = useRouter();
+  const router = useNavigate();
+  const location=useLocation();
   const windowType = useAppSelector(selectWindowSize);
   const storeData = storesDetailList.filter(
     (post) => post.id === parseInt(id)
@@ -36,7 +28,7 @@ function Store({ id }: Props) {
       setWidth(window.innerWidth);
     }
     if (!onMobile) {
-      router.push("/store-locations");
+      router("/store-locations");
     }
   }, [windowType]);
 
@@ -126,7 +118,7 @@ function Store({ id }: Props) {
 
 export default Store;
 
-Store.getInitialProps = async ({ query }: NextPageContext) => {
+Store.getInitialProps = async ({ query }: any) => {
   const { id } = query;
   return { id };
 };

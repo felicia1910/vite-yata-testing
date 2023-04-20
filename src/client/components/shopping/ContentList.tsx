@@ -233,15 +233,16 @@ const ContentList = () => {
     getBanners();
   }, [router, categoryList]);
 
-  // console.log("cat filter info in content list: ", catFilterList);
-  // console.log("product card list", productCard);
-  // console.log("filter list in redux: ", filterList);
-  // console.log("keep filter: ", keepFilter, onPage);
-  // console.log("category id: ", categoryId);
+  console.log("cat filter info in content list: ", catFilterList);
+  console.log("product card list", productCard);
+  console.log("filter list in redux: ", filterList);
+  console.log("keep filter: ", keepFilter, onPage);
+  console.log("category id: ", categoryId);
 
   return (
     <>
-      <Loading isLoading={pathLevel > 1 && catFilterList == null} />
+    {/* pathLevel > 1 && */}
+      <Loading isLoading={ catFilterList == null} />
       <div className='h-auto'>
         {/* Title */}
         <CategoryTitle query={query} />

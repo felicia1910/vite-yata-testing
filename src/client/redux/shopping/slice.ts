@@ -1,8 +1,7 @@
 import { createSlice, Draft, PayloadAction } from "@reduxjs/toolkit";
 import { DetailedHTMLProps } from "react";
-import { EShippingMode } from "../delivery/slice";
 import { RootState } from "../store";
-import { checkCartToConfirmationThunk, getProductDetailThunk, getShoppingCartListThunk, getUngroupedShoppingCartListThunk } from './thunk';
+import {  getProductDetailThunk, getShoppingCartListThunk} from './thunk';
 import { ICategoryList } from "../config/slice";
 import { current } from '@reduxjs/toolkit'
 
@@ -624,32 +623,7 @@ export const shoppingSlice = createSlice({
         state.error = action.error;
       }
     });
-    
-    builder.addCase(getUngroupedShoppingCartListThunk.fulfilled, (state, action) => {
-      state.ungroupedShoppingCartDetail = action.payload!;
-    });
-    builder.addCase(getUngroupedShoppingCartListThunk.rejected, (state, action) => {
-      if (action.payload) {
-        state.error = action.payload;
-      } else {
-        state.error = action.error;
-      }
-    });
-    builder.addCase(checkCartToConfirmationThunk.pending, (state) => {
-        state.shoppingCartDetail = state.shoppingCartDetail
-    });
-    builder.addCase(checkCartToConfirmationThunk.fulfilled, (state, action) => {
-      if (!action.payload.error) {
-        state.shoppingCartDetail = action.payload
-      }
-    });
-    builder.addCase(checkCartToConfirmationThunk.rejected, (state, action) => {
-      if (action.payload) {
-        state.error = action.payload;
-      } else {
-        state.error = action.error;
-      }
-    });
+  
   },
 });
 

@@ -1,15 +1,7 @@
 import React, { useState, lazy, Suspense } from "react";
-
 import DropDownList from "./DropDownList";
-import DeliveryButton from "../Buttons/DeliveryButton";
 import ShoppingCartButton from "../Buttons/ShoppingCartButton";
 import LoginButton from "../Buttons/LoginButton";
-import DeliveryModal from "../../modal/Delivery/DeliveryModal";
-//
-// import NavBarButtons from "../Buttons/NavBarButtons";
-// import LoginModal from "../../modal/Auth/LoginModal";
-// import SessionModal from "../../modal/SessionExpiredModal";
-//
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import {
   selectWindowSize,
@@ -17,31 +9,14 @@ import {
 } from "../../../redux/control/slice";
 import { WindowScreen } from "../../../utils/types";
 import {
-  initCrmGrabUser,
-  selectAdminGrabUserInfo,
-  selectAdminUserInfo,
   selectIsAdmin,
-  selectUserInfo,
 } from "../../../redux/auth/slice";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 
 const NavBarButtons = lazy(() => import("../Buttons/NavBarButtons"));
-const LoginModal = lazy(() => import("../../modal/Auth/LoginModal"));
 const SessionModal = lazy(() => import("../../modal/SessionExpiredModal"));
 
-// export const getStaticProps: GetStaticProps = wrapper.getStaticProps((store) => ({ }) => {
-//   const isAuthenticated = useAppSelector(selectIsAuthenticated)
-//   !isAuthenticated &&
-//     window.addEventListener('message', (e: any) => {
-//       if (e.data.message == "login") {
-//         console.log('message a', e)
-//         store.dispatch(loginSuccess(e.data.user))
-//         store.dispatch(closeLoginModal())
-//       }
-//     })
-//   return { props: {} }
-// })
 
 const Navbar: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -49,10 +24,6 @@ const Navbar: React.FC = () => {
   const location = useLocation();
   const windowType = useAppSelector(selectWindowSize);
   const isAdmin = useAppSelector(selectIsAdmin);
-  const adminUser = useAppSelector(selectAdminUserInfo);
-  const isCheckout = useAppSelector(selectIsCheckOut);
-  const adminGrabUser = useAppSelector(selectAdminGrabUserInfo)
-
   const [over, setOver] = useState<number | null>(null);
   const [activeDept, setActiveDept] = useState<number | null>(null);
   const [activeSegment, setActiveSegment] = useState<number>(0);
@@ -100,18 +71,7 @@ const Navbar: React.FC = () => {
               : "h-full visible ")
           }
         >
-          {!(atAdminLoginPage || isAdmin) && <DeliveryButton />}
-          {isAdmin && adminGrabUser && (
-            <button
-              className='items-center justify-center hidden w-32 p-2 text-sm text-white transition-colors duration-300 ease-in-out rounded-lg cursor-pointer lg:flex h-3/5 min-w-fit bg-yata-deep lg:hover:bg-yata '
-              onClick={() => {
-                dispatch(initCrmGrabUser());
-                router("/admin/login-member");
-              }}
-            >
-              登出 {adminGrabUser.memberNo}
-            </button>
-          )}
+          
           <LoginButton />
           {!(atAdminLoginPage || isAdmin) && (
             <ShoppingCartButton window={WindowScreen.laptop} />
@@ -128,8 +88,6 @@ const Navbar: React.FC = () => {
           setActiveType={setActiveType}
         />
 
-        <LoginModal />
-        {onLaptop && <DeliveryModal />}
         <SessionModal />
       </nav>
     </>

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import { Link, useNavigate,useLocation } from 'react-router-dom';
 import Store from "./[id]";
 import { useAppSelector } from "../../redux/store";
 import { selectWindowSize } from "../../redux/control/slice";
@@ -7,6 +7,7 @@ import { useWindowDimensions } from "../../hook/useWindowDimensions";
 import { Fragment } from "react";
 import ReturnButton from "../../components/common/ReturnButton";
 import { useGridCols } from "../../hook/useGridCols";
+import { selectImgUrl } from "../../redux/config/index";
 
 const storeName = [
   {
@@ -41,6 +42,7 @@ const storeName = [
 ];
 
 function StoreLocations() {
+  const imgUrl = useAppSelector(selectImgUrl);
   const [radio, setRadio] = useState("1");
   // const [gridCols, setGridCols] = useState<string>()
   const windowType = useAppSelector(selectWindowSize);
@@ -80,14 +82,13 @@ function StoreLocations() {
                           {onMobile ? (
                             <>
                               <Link
-                                href='/store-locations/[id]'
-                                as={"/store-locations/" + item.id}
+                                to='/store-locations/[id]'
                               >
                                 <div
                                   className='pt-3 pl-3 pr-3 text-left border rounded-xl hover:border-2 hover:border-yata lg:bg-white text-yata-deep w-44'
                                   ref={boxRef}
                                 >
-                                  <img src={item.route} />
+                                  <img src={imgUrl+item.route} />
                                   <div className='my-1 font-bold'>
                                     {item.content}
                                   </div>
@@ -113,7 +114,7 @@ function StoreLocations() {
                               >
                                 <div className='font-bold'>{item.content}</div>
                                 <img
-                                  src={item.route}
+                                  src={imgUrl+item.route}
                                   className='w-3/5 rounded-md'
                                 />
                               </button>

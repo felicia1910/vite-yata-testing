@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
-import { useRouter } from "next/router";
-import Head from "next/head";
+//import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import ItemImageBox from "../../components/shopping/Product/ItemImageBox";
 import ItemDetail from "../../components/shopping/Product/ItemDetail";
 import ItemDescription from "../../components/shopping/Product/ItemDescription";
@@ -22,12 +21,13 @@ import {
 } from "../../redux/shopping/slice";
 import { createPathList } from "../../utils/createPathList";
 import { IProductDetail } from "../../redux/shopping/slice";
+import useQuery from "../../hook/usePathname";
 
-const ProductDetail = ({
-  param,
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const router = useRouter();
+// : InferGetStaticPropsType<typeof getStaticProps>
+const ProductDetail = () => {
+  const router = useNavigate();
   const dispatch = useAppDispatch();
+  const location = useLocation();
   const catPath = useAppSelector((state) => state.config.categoryPath);
   const categoryList = useAppSelector(selectCategoryList);
   const productDetail = useAppSelector(selectProductDetail);
@@ -36,24 +36,29 @@ const ProductDetail = ({
   const [pathTitle, setPathTitle] = useState<ICategoryPath | string | null>(
     null
   );
- 
-  const [storedCatPath,setStoredCatPath] = useState('')
-  
+
+  const [storedCatPath, setStoredCatPath] = useState('');
+
+  const pathArr = location.pathname.split("/");
+  const productId = pathArr[pathArr.length - 1].split("quote_type=")[0];
+  const paramsValue = {
+    ['product-id']: productId
+  };
+
   useEffect(() => {
     const storedCatPath = localStorage.getItem("storedCatPath");
     const storedPlu = localStorage.getItem("storedPlu");
-    console.log(storedCatPath!)
+    //console.log(storedCatPath!)
     setStoredCatPath(storedCatPath!)
     dispatch(initProductDetail());
     const getProductDetail = async () => {
-      // const productId = router.query['product-id']
-      const productId = param["product-id"];
-      const catId = router.asPath.split("id=")[1] ?? 0;
-      const quoteType = router.asPath.split("quote_type=")[1];
-      // const catId = router.query.id ?? "";
+
+
+      const catId = pathArr[pathArr.length - 1].split("id=")[1] ?? 0;
+      const quoteType = location.pathname.split("quote_type=")[1];
 
       if (!productId) {
-        router.push("/404");
+        router("/404");
         return;
       } else {
         // console.log(storedPlu, productId, storedPlu !== productId);
@@ -76,7 +81,7 @@ const ProductDetail = ({
           })
         );
         if (res.type == "product/detail/rejected" || !res.payload) {
-          router.push("/404");
+          router("/404");
         }
 
         const detail: IProductDetail = res.payload;
@@ -96,26 +101,24 @@ const ProductDetail = ({
     };
 
     getProductDetail();
-  }, [param, router.query, categoryList]);
+  }, [categoryList]);
 
-  // console.log("productDetail", productDetail);
+  //console.log("productDetail", productDetail);
   // console.log("product detail category list: ", catPath);
-  // console.log("new category list: ", pathTitle);
   // console.log("stored path: ", storedCatPath);
 
   return (
     <>
-      <Head>
-        <title>
-          {productDetail && productDetail.full_name_c
-            ? `${productDetail.full_name_c} | YATA eShop`
-            : "YATA eShop"}
-        </title>
-      </Head>
+
+      <title>
+        {productDetail && productDetail.full_name_c
+          ? `${productDetail.full_name_c} | YATA eShop`
+          : "YATA eShop"}
+      </title>
+
       <Loading
         isLoading={
-          !(productDetail != null && productDetail.plu == currentProductId) ||
-          pathTitle == null
+          !(productDetail != null && productDetail.plu == currentProductId)
         }
       />
       {productDetail != null && (
@@ -125,7 +128,7 @@ const ProductDetail = ({
             query={
               pathTitle && pathTitle != ""
                 ? pathTitle
-                : storedCatPath&&JSON.parse(storedCatPath)
+                : storedCatPath && JSON.parse(storedCatPath)
             }
           />
           <div className='px-4 rangeLg:px-20 rangeXl:px-24 2xl:px-48'>
@@ -175,19 +178,19 @@ const ProductDetail = ({
   );
 };
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps = async (context: { params: any; }) => {
   return {
     props: { param: context.params },
   };
 };
 
-export const getStaticPaths: GetStaticPaths<{
-  "product-id": string;
-}> = async () => {
-  return {
-    paths: [], //indicates that no page needs be created at build time
-    fallback: "blocking", //indicates the type of fallback
-  };
-};
+// export const getStaticPaths: GetStaticPaths<{
+//   "product-id": string;
+// }> = async () => {
+//   return {
+//     paths: [], //indicates that no page needs be created at build time
+//     fallback: "blocking", //indicates the type of fallback
+//   };
+// };
 
 export default ProductDetail;

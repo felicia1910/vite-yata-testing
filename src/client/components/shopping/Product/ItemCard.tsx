@@ -1,4 +1,3 @@
-
 import React, {
   RefObject,
   useState,
@@ -8,9 +7,7 @@ import React, {
 } from "react";
 import { Link, useNavigate,useLocation } from 'react-router-dom';
 import { IProductCard } from "../../../redux/shopping/slice";
-import { addItemToCartThunk } from "../../../redux/shopping/thunk";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
-import { updateWishList, removeWishList } from "../../../redux/shopping/thunk";
 import { selectImgUrl } from "../../../redux/config/index";
 import { selectIsAuthenticated } from "../../../redux/auth/slice";
 import { silentRequest } from "../../layout/Buttons/LoginButton";
@@ -49,58 +46,11 @@ const ItemCard = ({ detail, cardRef, categoryId = 0, setTrigger }: Props) => {
   const likeChangeHandler = async (e: any) => {
     // console.log("detail.wish_list", detail.wish_list);
     e.stopPropagation();
-    if (isAuthenticated) {
-      if (like == "") {
-        setLike(detail.plu);
-        setTimeout(async () => {
-          const result = await dispatch(updateWishList(detail.plu));
-          if (result && setTrigger) setTrigger(true);
-        }, 500);
-      } else {
-        setLike("");
-        // console.log(123);
-        setTimeout(async () => {
-          const result = await dispatch(removeWishList(detail.plu));
-          if (result && setTrigger) setTrigger(true);
-        }, 500);
-      }
-    } else {
-      instance.loginRedirect(silentRequest);
-    }
+    router('/account')
   };
 
   const toggleSubmit = async () => {
-    setBtnLoading(true);
-    setTimeout(async () => {
-      const result: any = await dispatch(
-        addItemToCartThunk({
-          sku: detail.sku,
-          plu: detail.plu,
-          qty: 1,
-          categoryId: categoryId,
-        })
-      );
-
-      if (result.payload) {
-        if (result.payload.success == 1) {
-          setIsAddToCart({ success: true, err: "" });
-        } else {
-          console.log("error msg: ", result.payload.err[0].message);
-          const msg = result.payload.err[0].message.split("，")[0];
-          setIsAddToCart({
-            success: false,
-            err: msg,
-          });
-          // dispatch(
-          //   openWarningModal({
-          //     type: EWarningType.product,
-          //     text: result.payload.err[0].message,
-          //   })
-          // );
-        }
-      }
-      setBtnLoading(false);
-    }, 500);
+    //setBtnLoading(true);
   };
 
   return (

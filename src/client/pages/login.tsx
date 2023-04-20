@@ -1,51 +1,17 @@
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import Home from ".";
-import Loading from "../components/common/Loading";
-import LoginFrame from "../components/modal/Auth/LoginFrame";
 
-import { selectIsAuthenticated } from "../redux/auth/slice";
-import { selectWindowSize } from "../redux/control/slice";
-import { useAppSelector } from "../redux/store";
-import { useMsal } from "@azure/msal-react";
-import { silentRequest } from "../components/layout/Buttons/LoginButton";
+import ReturnButton from "../components/common/ReturnButton";
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 const Login = () => {
-  const router = useRouter();
-  const { instance } = useMsal();
-  const isAuthenticated = useAppSelector(selectIsAuthenticated);
-  const windowSize = useAppSelector(selectWindowSize);
-  const [iframePage, setIframePage] = useState<string>("");
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      router.push("/");
-    } else {
-      setTimeout(() => {
-        instance.loginRedirect(silentRequest);
-      }, 1000);
-    }
-  }, [router, isAuthenticated]);
-
-  // useEffect(() => {
-  //   const handleEvent = (event: any) => {
-  //     const { data, origin } = event;
-  //     if (origin === "https://yataloyaltyuat.b2clogin.com") {
-  //       // console.log('cross origin data', data)
-  //       setIframePage(data);
-  //     }
-  //   };
-
-  //   window.addEventListener("message", handleEvent, false);
-  //   return function cleanup() {
-  //     window.removeEventListener("message", handleEvent);
-  //   };
-  // }, [iframePage]);
-
-  // const setHeight =
-  //   iframePage == "opt" ? 480 : iframePage == "register" ? 600 : 480;
-
-  return <Loading isLoading={true} />;
+  const router = useNavigate();
+  return (
+    <>
+      <div className='mt-20'>
+        <div className="w-full flex justify-center h-40">閹割版本，原登陸轉去Outh2.0畫面，這邊不做。</div>
+        <ReturnButton btnName='返回' goBack={true} />
+      </div>
+    </>
+  );
 };
 
 export default Login;

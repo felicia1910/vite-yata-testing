@@ -16,7 +16,7 @@ const Loading = ({
   return (
     <>
       <div
-        className='fixed inset-0 z-50 flex items-center justify-center bg-transparent'
+        className='fixed inset-0 z-50 flex items-center justify-center bg-transparent visible'
         style={{
           opacity: isLoading ? opacity : 0,
           visibility: isLoading ? "visible" : "hidden",
@@ -31,6 +31,7 @@ const Loading = ({
           height: height,
           opacity: isLoading ? opacity : 0,
           visibility: isLoading ? "visible" : "hidden",
+          top:"-10px"
         }}
       >
         <div className='lds-roller z-[100] '>

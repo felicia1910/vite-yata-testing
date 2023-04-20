@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { WindowScreen } from "../../../utils/types";
-
 import OtherButtons from "../Buttons/OtherButtons";
 import SearchBar from "../NavBar/SearchBar";
-import DeliveryButton from "../Buttons/DeliveryButton";
 import ShoppingCartButton from "../Buttons/ShoppingCartButton";
 import Drawer from "../Drawer";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
@@ -16,7 +14,6 @@ import {
 } from "../../../redux/control/slice";
 import Navbar from "../NavBar";
 import {
-  initAdminUser,
   selectAdminUserInfo,
   selectIsAdmin,
 } from "../../../redux/auth/slice";
@@ -105,7 +102,6 @@ const Header = () => {
           >
             {!isAdmin ? (
               <>
-                <DeliveryButton />
                 <ShoppingCartButton window={WindowScreen.mobile} />
 
                 <button
@@ -119,18 +115,6 @@ const Header = () => {
               </>
             ) : (
               <>
-                {adminUser && (
-                  <button
-                    className='flex items-center p-1 text-xs border rounded-md min-w-fit border-yata-deep text-yata-deep'
-                    onClick={() => {
-                      dispatch(initAdminUser());
-                      router("/admin/login-member");
-                    }}
-                  >
-                    登出
-                    {adminUser.username}
-                  </button>
-                )}
                 <LoginButton />
               </>
             )}

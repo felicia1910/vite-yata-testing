@@ -7,10 +7,8 @@ import authReducer from './auth/slice'
 import controlReducer from './control/slice'
 import i18nReducer from './i18n/slice';
 import shoppingReducer from './shopping/slice';
-import deliveryReducer from './delivery/slice';
 import configReducer from './config/slice';
 import IconfigReducer from './config/index';
-import adminReducer from './admin/slice';
 
 const combinedReducer = combineReducers({
   auth: authReducer,
@@ -19,8 +17,6 @@ const combinedReducer = combineReducers({
   control: controlReducer,
   i18n: i18nReducer,
   shopping: shoppingReducer,
-  delivery: deliveryReducer,
-  admin: adminReducer,
 })
 
 const rootReducer = (

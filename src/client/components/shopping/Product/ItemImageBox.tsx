@@ -3,9 +3,10 @@ import {
   KeenSliderPlugin,
   useKeenSlider,
 } from "keen-slider/react";
-import Image from "next/image";
 import React, { MutableRefObject, useState } from "react";
 import ImageSliderArrow from "./ImageSliderArrow";
+import { selectImgUrl } from "../../../redux/config/index";
+import { useAppSelector } from "../../../redux/store";
 
 const ThumbnailPlugin = (
   mainRef: MutableRefObject<KeenSliderInstance | null>
@@ -47,6 +48,7 @@ type Props = {
 };
 
 export default function ItemImageBox({ plu, images }: Props) {
+  const imgUrl = useAppSelector(selectImgUrl);
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [loaded, setLoaded] = useState<boolean>(false);
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
@@ -91,11 +93,9 @@ export default function ItemImageBox({ plu, images }: Props) {
                   key={"product-img-" + idx}
                 >
                   <div className='relative h-full lg:w-full lg:h-auto aspect-square'>
-                    <Image
+                    <img
                       src={image.images_url}
                       alt={image.images_url}
-                      layout='fill'
-                      objectFit='contain'
                     />
                   </div>
                 </div>
@@ -176,11 +176,9 @@ export default function ItemImageBox({ plu, images }: Props) {
                 onClick={() => setCurrentSlide(idx)}
               >
                 <div className='relative w-full aspect-square'>
-                  <Image
+                  <img
                     src={image.images_url}
                     alt={image.images_url}
-                    layout='fill'
-                    objectFit='cover'
                   />
                 </div>
               </div>

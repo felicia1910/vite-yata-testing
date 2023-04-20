@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import Input from "../components/account/Input";
 import { selectUserInfo } from "../redux/auth/slice";
+import { selectImgUrl } from "../redux/config/index";
 import { useAppSelector } from "../redux/store";
 import { useAppDispatch } from "./../redux/store";
 import { contactDataThunk } from "./../redux/config/thunk";
 import { onLoaded, onLoading, selectWindowSize } from "../redux/control/slice";
-import { useRouter } from "next/router";
-import Image from "next/image";
+import { Link, useNavigate,useLocation } from 'react-router-dom';
+//import useQuery from '../hook/useQuery';
 
 type ContactFields = {
   [key: string]: string | undefined | boolean | ArrayBuffer | null;
@@ -35,7 +36,9 @@ const options = [
 ];
 const ContactUs = () => {
   const dispatch = useAppDispatch();
-  const router = useRouter();
+  const router = useNavigate();
+  const location=useLocation();
+  const imgUrl = useAppSelector(selectImgUrl);
   const user = useAppSelector(selectUserInfo);
   const windowSize = useAppSelector(selectWindowSize);
   const initialState: ContactFields = {
@@ -65,6 +68,7 @@ const ContactUs = () => {
   };
   const handleChange = (event: any) => {
     const file = event.target.files[0];
+    console.log('file',file)
     if (file) {
       setFileName(file.name);
     }
@@ -76,7 +80,7 @@ const ContactUs = () => {
         if (reader.result) {
           const sendImg = reader.result.toString().split(",")[1];
           // console.log("img base 64", sendImg);
-          setDataSend({ ...dataSend, PrimaryImage: sendImg });
+          //setDataSend({ ...dataSend, PrimaryImage: sendImg });
         }
       };
     }
@@ -97,28 +101,9 @@ const ContactUs = () => {
       }
     });
     if (hasErr) return;
-
-    dispatch(onLoading());
-    const result = await dispatch(contactDataThunk(dataSend));
-    // console.log("contact us result: ", result);
-    if (result.payload && result.payload.Message) {
-      const caseNo = result.payload.Message.split("Case Number: ")[1];
-      setDataSend(initialState);
-      setFileName("");
-      setError(initialErrorState);
-      router.push({ pathname: "/contact-success", query: { caseNo: caseNo } });
-    }
+    alert('傳送成功!(閹割版並未真的與後端串聯)')
   };
 
-  useEffect(() => {
-    const { orderNo } = router.query;
-    if (orderNo) {
-      setDataSend({
-        ...dataSend,
-        OrderNumber: orderNo as string,
-      });
-    }
-  }, [router]);
 
   return (
     <div className='lg:mt-6 lg:w-9/12 lg:m-auto'>
@@ -238,7 +223,7 @@ const ContactUs = () => {
             onClick={handleClick}
             className='px-2.5 py-4 mx-5 my-2 flex flex-col justify-center items-center w-36 border rounded-lg border-[#eaeaea] cursor-pointer bg-white'
           >
-            <img src='/contactUs/upload.png' alt='' className='w-2/3' />
+            <img src={imgUrl+'/contactUs/upload.png'} alt='' className='w-2/3' />
             <span className='border-b border-[#cdc9c9] text-yata-deep font-bold mt-2'>
               瀏覽我的電腦
             </span>
@@ -265,12 +250,10 @@ const ContactUs = () => {
               {fileName != "" ? (
                 <div className='flex items-center justify-start w-full'>
                   <span className='mr-2'>檔案名稱: {fileName}</span>
-                  <Image
-                    src='/modal/plus.png'
-                    width={20}
-                    height={20}
+                  <img
+                    src={imgUrl+'/modal/plus.png'}
                     alt=''
-                    className='rotate-45 cursor-pointer'
+                    className='rotate-45 cursor-pointer w-5 h-5'
                     onClick={handleRemove}
                   />
                 </div>
@@ -278,17 +261,6 @@ const ContactUs = () => {
                 ""
               )}
             </p>
-            <div
-              className='absolute hidden p-1.5 px-6 items-center justify-center text-white truncate transition-all duration-200 ease-in-out rounded lg:flex bg-yata-deep'
-              style={{
-                visibility: hover ? "visible" : "hidden",
-                opacity: hover ? 1 : 0,
-                top: -30,
-                left: windowSize == "laptop" ? 150 : "20",
-              }}
-            >
-              {fileName}
-            </div>
           </div>
         </div>
 

@@ -9,22 +9,6 @@ export default function ItemDescription({ item }: Props) {
   return (
     <>
       <div>
-        {/* Product introduction */}
-        {/* {item.promotions.length > 0 && (
-          <div className='py-4 my-4 lg:border-dashed border-y lg:border-yata-deep border-yata-brown'>
-            <ul className='list-disc ml-[5%]'>
-              {item.promotions.map((desc, idx) => {
-                // console.log(item.promotions[idx]);
-                return (
-                  <li key={`promo-desc-${idx}`}>
-                    {Object.values(desc)[0] as string}
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        )} */}
-
         {/* Product remark, refund and delivery */}
         <div className='mb-4 lg:flex lg:flex-row lg:justify-between lg:space-x-4 lg:px-2'>
           <div className='flex flex-row my-4 lg:w-4/12'>
